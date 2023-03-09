@@ -1,9 +1,8 @@
 //
 //  Logger.swift
-//  ZYRLUserApp
+//  AdyenReaderTest
 //
-//  Created by  Macbook on 20.03.2021.
-//  Copyright © 2021 ZYRL. All rights reserved.
+//  Created by Maxim on 09.03.2023.
 //
 
 import Foundation
@@ -23,5 +22,5 @@ class Logger {
             print("\nHTTP response: \(request)\nParams: \(jsonString)\n")
         }
     }
+    
 }
-

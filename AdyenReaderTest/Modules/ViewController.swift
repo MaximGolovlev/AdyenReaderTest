@@ -6,46 +6,64 @@
 //
 
 import UIKit
-import TerminalAPIKit
-import Adyen
 
 class ViewController: UIViewController {
-
-    let manager = AdyenReaderManager()
     
-    private lazy var presenter = AdyenPresenter(delegate: self)
+    private lazy var connectDeviceButton: UIButton = {
+        $0.setTitle("Connect Device", for: .normal)
+        $0.addTarget(self, action: #selector(connectButtonTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
+    private lazy var transactionButton: UIButton = {
+        $0.setTitle("Make Transaction", for: .normal)
+        $0.addTarget(self, action: #selector(makeTransactionTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
+    var adyenManager = AdyenManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      
-        
-        manager.setupSession(request: SessionSetupRequest.testRequest) { result in
-            switch result {
-            case .success(let response):
-                print(response.sessionId)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-   //     presenter.requestPaymentData(orderId: "ordr_2EWt8PUKEjtjAGQDqEkKIqJWR1p", POIID: "V400m-111111111")
-        
-    }
-}
+        connectDeviceButton.sizeToFit()
+        transactionButton.sizeToFit()
 
-extension ViewController: AdyenPresenterDelegate {
-    
-    func paymentDataDidLoad(item: SaleRequestAdapter) {
-        presenter.makePaymentRequest(request: item)
+        view.addSubview(connectDeviceButton)
+        view.addSubview(transactionButton)
+        
+        connectDeviceButton.center = CGPoint(x: view.center.x, y: view.center.y - 50)
+        transactionButton.center = CGPoint(x: view.center.x, y: view.center.y + 50)
     }
     
-    func paymentWasMade(response: PaymentResponse) {
-        print(response)
+    @objc private func connectButtonTapped() {
+        adyenManager.presentDeviceManagement(target: self)
     }
     
-    func failed(message: String) {
-        print(message)
+    @objc private func makeTransactionTapped() {
+        let orderUUID = "b5a1aded-ad69-46f1-8429-5892ea88b6d7"
+        Task {
+            do {
+                let response = try await adyenManager.performTransaction(orderUUID: orderUUID)
+                
+            } catch let DecodingError.dataCorrupted(context) {
+                let message = context.debugDescription
+                showAlert(message: message)
+            } catch let DecodingError.keyNotFound(key, context) {
+                let message = "Key '\(key)' not found: \(context.debugDescription), codingPath: \(context.codingPath)"
+                showAlert(message: message)
+            } catch let DecodingError.valueNotFound(value, context) {
+                let message = "Value '\(value)' not found: \(context.debugDescription), codingPath: \(context.codingPath)"
+                showAlert(message: message)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                let message = "Type '\(type)' mismatch: \(context.debugDescription), codingPath: \(context.codingPath)"
+                showAlert(message: message)
+            } catch {
+                showAlert(message: error.localizedDescription)
+            }
+            
+        }
     }
+    
 }
 

@@ -7,37 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		94814FD328CF2A6F005A1E94 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FD228CF2A6F005A1E94 /* AppService.swift */; };
-		94814FD528CF2ABD005A1E94 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FD428CF2ABD005A1E94 /* Logger.swift */; };
-		94814FD728CF2B8B005A1E94 /* SessionSetupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FD628CF2B8B005A1E94 /* SessionSetupRequest.swift */; };
-		94814FE628CF36FD005A1E94 /* Collection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FE528CF36FD005A1E94 /* Collection+Ext.swift */; };
 		94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FE828CF408E005A1E94 /* TerminalAPIKit */; };
-		94814FEB28CF5A1F005A1E94 /* SaleRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FEA28CF5A1F005A1E94 /* SaleRequestAdapter.swift */; };
-		94814FED28CF6E58005A1E94 /* AdyenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FEC28CF6E58005A1E94 /* AdyenPresenter.swift */; };
-		94814FEF28CF7BC5005A1E94 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94814FEE28CF7BC5005A1E94 /* Date+Ext.swift */; };
 		94814FF228CF8148005A1E94 /* Adyen in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF128CF8148005A1E94 /* Adyen */; };
 		94814FF428CF8148005A1E94 /* AdyenActions in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF328CF8148005A1E94 /* AdyenActions */; };
 		94814FF628CF8148005A1E94 /* AdyenCard in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF528CF8148005A1E94 /* AdyenCard */; };
 		94814FF828CF8148005A1E94 /* AdyenComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF728CF8148005A1E94 /* AdyenComponents */; };
 		94814FFA28CF8148005A1E94 /* AdyenDropIn in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF928CF8148005A1E94 /* AdyenDropIn */; };
 		94814FFC28CF8148005A1E94 /* AdyenEncryption in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FFB28CF8148005A1E94 /* AdyenEncryption */; };
+		94B661C6299553B700E243DF /* ADYPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94B661C5299553B700E243DF /* ADYPOS */; };
+		94B661C8299553B700E243DF /* AdyenPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94B661C7299553B700E243DF /* AdyenPOS */; };
 		94D5858528CA0B6D00F01AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5858428CA0B6D00F01AE2 /* AppDelegate.swift */; };
 		94D5858728CA0B6D00F01AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5858628CA0B6D00F01AE2 /* SceneDelegate.swift */; };
 		94D5858928CA0B6D00F01AE2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5858828CA0B6D00F01AE2 /* ViewController.swift */; };
 		94D5858C28CA0B6D00F01AE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94D5858A28CA0B6D00F01AE2 /* Main.storyboard */; };
 		94D5858E28CA0B7100F01AE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D5858D28CA0B7100F01AE2 /* Assets.xcassets */; };
 		94D5859128CA0B7100F01AE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94D5858F28CA0B7100F01AE2 /* LaunchScreen.storyboard */; };
-		94D585A628CA11F900F01AE2 /* AdyenReaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D585A528CA11F900F01AE2 /* AdyenReaderManager.swift */; };
+		94D6B6D829BA040F005F5474 /* AdyenDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6D729BA040F005F5474 /* AdyenDevice.swift */; };
+		94D6B6DA29BA042E005F5474 /* AdyenConnectedDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6D929BA042E005F5474 /* AdyenConnectedDevice.swift */; };
+		94D6B6DC29BA0446005F5474 /* SessionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */; };
+		94D6B6DE29BA045C005F5474 /* AdyenPaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */; };
+		94D6B6E029BA0667005F5474 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6DF29BA0667005F5474 /* APIManager.swift */; };
+		94D6B6E229BA068D005F5474 /* AdyenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6E129BA068D005F5474 /* AdyenManager.swift */; };
+		94D6B6E429BA0853005F5474 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6E329BA0853005F5474 /* UIViewController+Ext.swift */; };
+		94D6B6E729BA1002005F5474 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6E629BA1002005F5474 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		94814FD228CF2A6F005A1E94 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
-		94814FD428CF2ABD005A1E94 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		94814FD628CF2B8B005A1E94 /* SessionSetupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSetupRequest.swift; sourceTree = "<group>"; };
-		94814FE528CF36FD005A1E94 /* Collection+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Ext.swift"; sourceTree = "<group>"; };
-		94814FEA28CF5A1F005A1E94 /* SaleRequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleRequestAdapter.swift; sourceTree = "<group>"; };
-		94814FEC28CF6E58005A1E94 /* AdyenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenPresenter.swift; sourceTree = "<group>"; };
-		94814FEE28CF7BC5005A1E94 /* Date+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		94D5858128CA0B6D00F01AE2 /* AdyenReaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdyenReaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D5858428CA0B6D00F01AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94D5858628CA0B6D00F01AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +41,14 @@
 		94D5858D28CA0B7100F01AE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94D5859028CA0B7100F01AE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94D5859228CA0B7100F01AE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94D585A528CA11F900F01AE2 /* AdyenReaderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenReaderManager.swift; sourceTree = "<group>"; };
+		94D6B6D729BA040F005F5474 /* AdyenDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenDevice.swift; sourceTree = "<group>"; };
+		94D6B6D929BA042E005F5474 /* AdyenConnectedDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenConnectedDevice.swift; sourceTree = "<group>"; };
+		94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsResponse.swift; sourceTree = "<group>"; };
+		94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenPaymentRequest.swift; sourceTree = "<group>"; };
+		94D6B6DF29BA0667005F5474 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		94D6B6E129BA068D005F5474 /* AdyenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenManager.swift; sourceTree = "<group>"; };
+		94D6B6E329BA0853005F5474 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		94D6B6E629BA1002005F5474 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,8 @@
 				94814FFA28CF8148005A1E94 /* AdyenDropIn in Frameworks */,
 				94814FF828CF8148005A1E94 /* AdyenComponents in Frameworks */,
 				94814FF428CF8148005A1E94 /* AdyenActions in Frameworks */,
+				94B661C6299553B700E243DF /* ADYPOS in Frameworks */,
+				94B661C8299553B700E243DF /* AdyenPOS in Frameworks */,
 				94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,19 +71,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		94814FFD28D0BDB1005A1E94 /* Adyen */ = {
-			isa = PBXGroup;
-			children = (
-				94D585A528CA11F900F01AE2 /* AdyenReaderManager.swift */,
-				94814FD628CF2B8B005A1E94 /* SessionSetupRequest.swift */,
-			);
-			path = Adyen;
-			sourceTree = "<group>";
-		};
 		94814FFE28D0BDC2005A1E94 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				94814FEA28CF5A1F005A1E94 /* SaleRequestAdapter.swift */,
+				94D6B6D729BA040F005F5474 /* AdyenDevice.swift */,
+				94D6B6D929BA042E005F5474 /* AdyenConnectedDevice.swift */,
+				94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */,
+				94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -100,29 +98,19 @@
 		9481500028D0BDE2005A1E94 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				94814FEC28CF6E58005A1E94 /* AdyenPresenter.swift */,
 				94D5858828CA0B6D00F01AE2 /* ViewController.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		9481500128D0BDF3005A1E94 /* Service */ = {
+		9481500128D0BDF3005A1E94 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				94814FFD28D0BDB1005A1E94 /* Adyen */,
-				94814FD428CF2ABD005A1E94 /* Logger.swift */,
-				94814FD228CF2A6F005A1E94 /* AppService.swift */,
+				94D6B6DF29BA0667005F5474 /* APIManager.swift */,
+				94D6B6E129BA068D005F5474 /* AdyenManager.swift */,
+				94D6B6E629BA1002005F5474 /* Logger.swift */,
 			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		9481500228D0BDFF005A1E94 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				94814FE528CF36FD005A1E94 /* Collection+Ext.swift */,
-				94814FEE28CF7BC5005A1E94 /* Date+Ext.swift */,
-			);
-			path = Helpers;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		94D5857828CA0B6D00F01AE2 = {
@@ -145,12 +133,20 @@
 			isa = PBXGroup;
 			children = (
 				94814FFF28D0BDD3005A1E94 /* Application */,
-				9481500228D0BDFF005A1E94 /* Helpers */,
-				9481500128D0BDF3005A1E94 /* Service */,
+				94D6B6E529BA088D005F5474 /* Helpers */,
+				9481500128D0BDF3005A1E94 /* Managers */,
 				9481500028D0BDE2005A1E94 /* Modules */,
 				94814FFE28D0BDC2005A1E94 /* Models */,
 			);
 			path = AdyenReaderTest;
+			sourceTree = "<group>";
+		};
+		94D6B6E529BA088D005F5474 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				94D6B6E329BA0853005F5474 /* UIViewController+Ext.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +173,8 @@
 				94814FF728CF8148005A1E94 /* AdyenComponents */,
 				94814FF928CF8148005A1E94 /* AdyenDropIn */,
 				94814FFB28CF8148005A1E94 /* AdyenEncryption */,
+				94B661C5299553B700E243DF /* ADYPOS */,
+				94B661C7299553B700E243DF /* AdyenPOS */,
 			);
 			productName = AdyenReaderTest;
 			productReference = 94D5858128CA0B6D00F01AE2 /* AdyenReaderTest.app */;
@@ -209,6 +207,7 @@
 			packageReferences = (
 				94814FE728CF408E005A1E94 /* XCRemoteSwiftPackageReference "adyen-terminal-api-ios" */,
 				94814FF028CF8148005A1E94 /* XCRemoteSwiftPackageReference "adyen-ios" */,
+				94B661C4299553B700E243DF /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */,
 			);
 			productRefGroup = 94D5858228CA0B6D00F01AE2 /* Products */;
 			projectDirPath = "";
@@ -237,17 +236,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94814FD328CF2A6F005A1E94 /* AppService.swift in Sources */,
-				94814FD528CF2ABD005A1E94 /* Logger.swift in Sources */,
+				94D6B6E229BA068D005F5474 /* AdyenManager.swift in Sources */,
+				94D6B6E729BA1002005F5474 /* Logger.swift in Sources */,
+				94D6B6E029BA0667005F5474 /* APIManager.swift in Sources */,
+				94D6B6DA29BA042E005F5474 /* AdyenConnectedDevice.swift in Sources */,
+				94D6B6E429BA0853005F5474 /* UIViewController+Ext.swift in Sources */,
 				94D5858928CA0B6D00F01AE2 /* ViewController.swift in Sources */,
-				94814FEB28CF5A1F005A1E94 /* SaleRequestAdapter.swift in Sources */,
+				94D6B6D829BA040F005F5474 /* AdyenDevice.swift in Sources */,
+				94D6B6DE29BA045C005F5474 /* AdyenPaymentRequest.swift in Sources */,
+				94D6B6DC29BA0446005F5474 /* SessionsResponse.swift in Sources */,
 				94D5858528CA0B6D00F01AE2 /* AppDelegate.swift in Sources */,
-				94D585A628CA11F900F01AE2 /* AdyenReaderManager.swift in Sources */,
-				94814FEF28CF7BC5005A1E94 /* Date+Ext.swift in Sources */,
-				94814FED28CF6E58005A1E94 /* AdyenPresenter.swift in Sources */,
-				94814FD728CF2B8B005A1E94 /* SessionSetupRequest.swift in Sources */,
 				94D5858728CA0B6D00F01AE2 /* SceneDelegate.swift in Sources */,
-				94814FE628CF36FD005A1E94 /* Collection+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +394,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B7HZ65DT3V;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = /$PROJECT_DIR/$TARGET_NAME/Application/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
@@ -403,6 +403,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -424,6 +425,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B7HZ65DT3V;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = /$PROJECT_DIR/$TARGET_NAME/Application/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
@@ -432,6 +434,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -485,6 +488,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		94B661C4299553B700E243DF /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenPOS_1.0.4";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -522,6 +533,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 94814FF028CF8148005A1E94 /* XCRemoteSwiftPackageReference "adyen-ios" */;
 			productName = AdyenEncryption;
+		};
+		94B661C5299553B700E243DF /* ADYPOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94B661C4299553B700E243DF /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */;
+			productName = ADYPOS;
+		};
+		94B661C7299553B700E243DF /* AdyenPOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94B661C4299553B700E243DF /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */;
+			productName = AdyenPOS;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
