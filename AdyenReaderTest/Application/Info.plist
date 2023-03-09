@@ -25,7 +25,9 @@
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>This enables setting up a Bluetooth pairing between the mobile device and the card reader.</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>13.0.0</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0.0</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
