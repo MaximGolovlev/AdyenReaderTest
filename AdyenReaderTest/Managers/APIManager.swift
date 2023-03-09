@@ -9,6 +9,9 @@ import Foundation
 
 enum APIManager {
     
+    case refreshToken(login: String, password: String)
+    case refreshOrderUUID(params: [String: Any])
+    
     case fetchAdyenSetupToken(setupToken: String, id2: String)
     case payAdyenOrderLocal(orderUUID: String, POIID: String)
     case payAdyenOrderCloud(orderUUID: String, POIID: String)
@@ -19,11 +22,15 @@ enum APIManager {
     }
     
     var token: String {
-        return "e2fe23e70b9732bdabb85843f619d5c93284773ef2d4aa72e88dcf1bfa55552a"
+        return LocalStorage.token ?? ""
     }
     
     var method: String {
         switch self {
+        case .refreshToken:
+            return "/auth/partner/login/"
+        case .refreshOrderUUID:
+            return "/api/orders/"
         case .fetchAdyenSetupToken:
             return "/api/adyen/terminals/sessions/"
         case .payAdyenOrderLocal(let orderUUID, _):
@@ -35,22 +42,30 @@ enum APIManager {
         }
     }
     
-    var httpMethod: String {
+    var httpMethod: HTTPMethod {
         switch self {
+        case .refreshToken:
+            return .post
+        case .refreshOrderUUID:
+            return .post
         case .fetchAdyenSetupToken:
-            return "POST"
+            return .post
         case .payAdyenOrderLocal:
-            return "GET"
+            return .get
         case .payAdyenOrderCloud:
-            return "GET"
+            return .get
         case .checkAdyenPayment:
-            return "POST"
+            return .post
         }
     }
     
-    var params: [String: String] {
+    var params: [String: Any] {
         
         switch self {
+        case .refreshToken(let login, let password):
+            return ["password": "\(password)", "username": "\(login)", "to": "REVIPAD"]
+        case .refreshOrderUUID(let params):
+            return params
         case .fetchAdyenSetupToken(let setupToken, let id2):
             return ["setup_token": setupToken, "id2": id2]
         case .payAdyenOrderLocal:
@@ -64,6 +79,10 @@ enum APIManager {
     
     var query: [(String, String)] {
         switch self {
+        case .refreshToken:
+            return []
+        case .refreshOrderUUID:
+            return []
         case .fetchAdyenSetupToken:
             return []
         case .payAdyenOrderLocal(_, let POIID):
@@ -76,8 +95,13 @@ enum APIManager {
     }
     
     var headers: [String: String] {
-        ["Content-Type": "application/json",
-         "Authorization": "Token \(token)"]
+        switch self {
+        case .refreshToken:
+            return ["Content-Type": "application/json"]
+        default:
+            return ["Content-Type": "application/json",
+             "Authorization": "Token \(token)"]
+        }
     }
     
     func makeRequest<T: Codable>() async throws -> T {
@@ -91,18 +115,18 @@ enum APIManager {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
+        request.httpMethod = httpMethod.rawValue
         
         headers.forEach({
             request.addValue($0.value, forHTTPHeaderField: $0.key)
         })
         
-        if httpMethod == "POST" {
+        if httpMethod == .post {
             let jsonData = try? JSONSerialization.data(withJSONObject: params)
             request.httpBody = jsonData
         }
         
-        Logger.request(request: url.absoluteString, headers: headers, params: [:])
+        Logger.request(request: url.absoluteString, headers: headers, params: params)
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -164,4 +188,9 @@ enum NetworkAuthError: Error, LocalizedError {
         }
     }
 
+}
+
+enum HTTPMethod: String {
+    case post = "POST"
+    case get = "GET"
 }

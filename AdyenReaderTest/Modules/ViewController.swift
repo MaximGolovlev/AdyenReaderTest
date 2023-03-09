@@ -6,34 +6,73 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
     
-    private lazy var connectDeviceButton: UIButton = {
+    var mainContainer: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 20
+        return $0
+    }(UIStackView())
+    
+    var tokenContainer: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 20
+        return $0
+    }(UIStackView())
+    
+    var tokenLabel: UILabel = {
+        $0.text = LocalStorage.token
+        $0.numberOfLines = 0
+        return $0
+    }(UILabel())
+    
+    lazy var refreshTokenButton: UIButton = {
+        $0.titleLabel?.lineBreakMode = .byWordWrapping
+        $0.addTarget(self, action: #selector(refreshTokenTapped), for: .touchUpInside)
+        $0.snp.makeConstraints({ $0.width.equalTo(120) })
+        return $0
+    }(UIButton(type: .system))
+    
+    var orderUUIDContainer: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 20
+        return $0
+    }(UIStackView())
+    
+    var orderUUIDLabel: UILabel = {
+        $0.text = LocalStorage.orderUUID
+        $0.numberOfLines = 0
+        return $0
+    }(UILabel())
+    
+    lazy var refreshOrderUUIDButton: UIButton = {
+        $0.titleLabel?.lineBreakMode = .byWordWrapping
+        $0.addTarget(self, action: #selector(refreshOrderUUIDTapped), for: .touchUpInside)
+        $0.snp.makeConstraints({ $0.width.equalTo(120) })
+        return $0
+    }(UIButton(type: .system))
+    
+    lazy var connectDeviceButton: UIButton = {
         $0.setTitle("Connect Device", for: .normal)
         $0.addTarget(self, action: #selector(connectButtonTapped), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
     
-    private lazy var transactionButton: UIButton = {
+    lazy var transactionButton: UIButton = {
         $0.setTitle("Make Transaction", for: .normal)
         $0.addTarget(self, action: #selector(makeTransactionTapped), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
     
-    var adyenManager = AdyenManager.shared
+    private var adyenManager = AdyenManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        connectDeviceButton.sizeToFit()
-        transactionButton.sizeToFit()
-
-        view.addSubview(connectDeviceButton)
-        view.addSubview(transactionButton)
-        
-        connectDeviceButton.center = CGPoint(x: view.center.x, y: view.center.y - 50)
-        transactionButton.center = CGPoint(x: view.center.x, y: view.center.y + 50)
+        configViews()
+        refreshViews()
     }
     
     @objc private func connectButtonTapped() {
@@ -41,28 +80,22 @@ class ViewController: UIViewController {
     }
     
     @objc private func makeTransactionTapped() {
-        let orderUUID = "b5a1aded-ad69-46f1-8429-5892ea88b6d7"
         Task {
             do {
-                let response = try await adyenManager.performTransaction(orderUUID: orderUUID)
-                
-            } catch let DecodingError.dataCorrupted(context) {
-                let message = context.debugDescription
-                showAlert(message: message)
-            } catch let DecodingError.keyNotFound(key, context) {
-                let message = "Key '\(key)' not found: \(context.debugDescription), codingPath: \(context.codingPath)"
-                showAlert(message: message)
-            } catch let DecodingError.valueNotFound(value, context) {
-                let message = "Value '\(value)' not found: \(context.debugDescription), codingPath: \(context.codingPath)"
-                showAlert(message: message)
-            } catch let DecodingError.typeMismatch(type, context)  {
-                let message = "Type '\(type)' mismatch: \(context.debugDescription), codingPath: \(context.codingPath)"
-                showAlert(message: message)
+                let response = try await adyenManager.performTransaction(orderUUID: LocalStorage.orderUUID ?? "")
+                showAlert(message: "Transaction succeed!")
             } catch {
                 showAlert(message: error.localizedDescription)
             }
-            
         }
+    }
+    
+    @objc private func refreshTokenTapped() {
+        refreshToken()
+    }
+    
+    @objc private func refreshOrderUUIDTapped() {
+        refreshOrder()
     }
     
 }

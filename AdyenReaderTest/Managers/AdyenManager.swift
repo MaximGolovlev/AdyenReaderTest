@@ -76,19 +76,23 @@ extension AdyenManager: PaymentServiceDelegate {
 extension AdyenManager: DeviceManagerDelegate {
     
     func onDeviceDiscovered(device: AdyenPOS.Device, by manager: AdyenPOS.DeviceManager) {
-
+        deviceDelegate?.onDeviceDiscovered(device: AdyenDevice(device))
     }
     
     func onDeviceDiscoveryFailed(with error: Error, by manager: AdyenPOS.DeviceManager) {
-
+        deviceDelegate?.onDeviceDiscoveryFailed(with: error)
     }
     
     func onDeviceConnected(with error: Error?, to manager: AdyenPOS.DeviceManager) {
-
+        if let device = manager.connectedDevice, error == nil {
+            deviceDelegate?.onDeviceConnected(device: AdyenConnectedDevice(device))
+        } else if let error = error {
+            deviceDelegate?.onDeviceConnectionFail(with: error)
+        }
     }
     
     func onDeviceDisconnected(from manager: AdyenPOS.DeviceManager) {
-
+        deviceDelegate?.onDeviceDisconnected()
     }
     
 }

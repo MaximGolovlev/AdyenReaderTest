@@ -11,22 +11,31 @@ extension UIViewController {
     
     func showAlert(title: String? = "Oops :(",
                    message: String?,
-                   actionTitle: String? = "Got it!",
-                   actionHandler: (() -> Void)? = nil,
+                   loginConfigureation: ((UITextField) -> Void)? = nil,
+                   passwordConfigureation: ((UITextField) -> Void)? = nil,
                    cancelTitle: String? = "Got it!",
-                   cancelHandler: (()-> Void)? = nil,
+                   cancelHandler: ((String?, String?)-> Void)? = nil,
                    presentCompletion: (()-> Void)? = nil) {
         
         DispatchQueue.main.async { [weak self] in
             
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
-            if let actionHandler = actionHandler {
-                let action = UIAlertAction(title: actionTitle, style: .default, handler: { _ in actionHandler() })
-                alert.addAction(action)
+            if let config = loginConfigureation {
+                alert.addTextField(configurationHandler: config)
             }
             
-            let close = UIAlertAction(title: cancelTitle, style: .cancel, handler: { _ in cancelHandler?() })
+            if let config = passwordConfigureation {
+                alert.addTextField(configurationHandler: config)
+            }
+            
+            let close = UIAlertAction(title: cancelTitle, style: .cancel, handler: { _ in
+                let loginText = alert.textFields?[safe: 0]?.text
+                let passText = alert.textFields?[safe: 1]?.text
+                
+                cancelHandler?(loginText, passText)
+            })
+            
             alert.addAction(close)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
