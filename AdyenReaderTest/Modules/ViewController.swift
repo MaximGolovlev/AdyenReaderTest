@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import AdyenPOS
 
 class ViewController: UIViewController {
     
@@ -84,8 +85,10 @@ class ViewController: UIViewController {
             do {
                 let response = try await adyenManager.performTransaction(orderUUID: LocalStorage.orderUUID ?? "")
                 showAlert(message: "Transaction succeed!")
+            } catch let error as AdyenPOSError {
+                showAlert(message: error.description)
             } catch {
-                showAlert(message: error.localizedDescription)
+                showAlert(message: error.localizedDescription.description)
             }
         }
     }
