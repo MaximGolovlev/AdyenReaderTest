@@ -104,7 +104,7 @@ enum APIManager {
         }
     }
     
-    func makeRequest<T: Codable>() async throws -> T {
+    func makeRequest<T: Codable>(logsHandler: ((String?) -> ())?) async throws -> T {
         
         let urlPath = baseURL + method
         var urlComponents = URLComponents(string: urlPath)
@@ -126,11 +126,13 @@ enum APIManager {
             request.httpBody = jsonData
         }
         
-        Logger.request(request: url.absoluteString, headers: headers, params: params)
+        let requestLog = Logger.request(request: url.absoluteString, headers: headers, params: params)
+        logsHandler?(requestLog)
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        Logger.response(request: url.absoluteString, data: data)
+        let responseLog = Logger.response(request: url.absoluteString, data: data)
+        logsHandler?(responseLog)
         
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode - 200 < 99 {

@@ -18,6 +18,8 @@ protocol AdyenManagerDeviceDelegate: AnyObject {
 
 class AdyenManager {
     
+    var logsHandler: ((String?) -> ())?
+    
     static let shared = AdyenManager()
     
     private var paymentService: PaymentService!
@@ -52,7 +54,7 @@ class AdyenManager {
         let presentationMode: TransactionPresentationMode = .viewModifier
         
         let manager = APIManager.payAdyenOrderLocal(orderUUID: orderUUID, POIID: poid)
-        let paymentRequest: AdyenPaymentRequest = try await manager.makeRequest()
+        let paymentRequest: AdyenPaymentRequest = try await manager.makeRequest(logsHandler: logsHandler)
         let data = try JSONEncoder().encode(paymentRequest)
         let transaction = try Transaction.Request(data: data)
         
@@ -65,7 +67,7 @@ extension AdyenManager: PaymentServiceDelegate {
     func register(with setupToken: String) async throws -> String {
         
         let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: "bsns_1xqU7FT5OorUjbzQsR15KufTfCP")
-        let sessionResponse: SessionsResponse = try await manager.makeRequest()
+        let sessionResponse: SessionsResponse = try await manager.makeRequest(logsHandler: logsHandler)
         self.sessionResponse = sessionResponse
         
         return sessionResponse.sdkData

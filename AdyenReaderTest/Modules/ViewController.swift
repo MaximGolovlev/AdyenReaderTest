@@ -67,6 +67,12 @@ class ViewController: UIViewController {
         return $0
     }(UIButton(type: .system))
     
+    lazy var logsConsole: UITextView = {
+        $0.isEditable = false
+        $0.snp.makeConstraints({ $0.height.equalTo(400) })
+        return $0
+    }(UITextView())
+    
     private var adyenManager = AdyenManager.shared
     
     override func viewDidLoad() {
@@ -74,6 +80,9 @@ class ViewController: UIViewController {
         
         configViews()
         refreshViews()
+        
+        adyenManager.connectToLastKnownDevice()
+        adyenManager.logsHandler = handleLogs(message:)
     }
     
     @objc private func connectButtonTapped() {

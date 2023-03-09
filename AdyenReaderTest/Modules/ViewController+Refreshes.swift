@@ -5,7 +5,7 @@
 //  Created by Maxim on 09.03.2023.
 //
 
-import Foundation
+import UIKit
 
 extension ViewController {
     
@@ -13,9 +13,12 @@ extension ViewController {
         
         view.addSubview(mainContainer)
         mainContainer.snp.makeConstraints({
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-200)
             $0.left.right.equalToSuperview().inset(20)
         })
+        
+        view.addSubview(logsConsole)
+        logsConsole.snp.makeConstraints({ $0.left.right.bottom.equalToSuperview() })
         
         mainContainer.addArrangedSubviews([connectDeviceButton, tokenContainer, orderUUIDContainer, transactionButton])
         
@@ -49,7 +52,8 @@ extension ViewController {
             
             Task {
                 do {
-                    let response: LoginResponse = try await APIManager.refreshToken(login: login, password: password).makeRequest()
+                    let manager = APIManager.refreshToken(login: login, password: password)
+                    let response: LoginResponse = try await manager.makeRequest(logsHandler: { self?.handleLogs(message: $0) })
                     LocalStorage.token = response.token
                     self?.refreshViews()
                 } catch {
@@ -62,12 +66,28 @@ extension ViewController {
     func refreshOrder() {
         Task {
             do {
-                let response: OrderResponse = try await APIManager.refreshOrderUUID(params: Mocker.orderRequestParams).makeRequest()
+                let manager = APIManager.refreshOrderUUID(params: Mocker.orderRequestParams)
+                let response: OrderResponse = try await manager.makeRequest(logsHandler: { self.handleLogs(message: $0) })
                 LocalStorage.orderUUID = response.order.uuid
                 refreshViews()
             } catch {
                 showAlert(message: error.localizedDescription)
             }
+        }
+    }
+    
+    func handleLogs(message: String?) {
+        DispatchQueue.main.async {
+            message.map({ self.logsConsole.insertText($0) })
+            self.scrollTextViewToBottom(textView: self.logsConsole)
+        }
+    }
+    
+    func scrollTextViewToBottom(textView: UITextView) {
+        if textView.text.count > 0 {
+            let location = textView.text.count - 1
+            let bottom = NSMakeRange(location, 1)
+            textView.scrollRangeToVisible(bottom)
         }
     }
     
