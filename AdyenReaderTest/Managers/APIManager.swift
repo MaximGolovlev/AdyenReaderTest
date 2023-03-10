@@ -67,7 +67,7 @@ enum APIManager {
         case .refreshOrderUUID(let params):
             return params
         case .fetchAdyenSetupToken(let setupToken, let id2):
-            return ["setup_token": setupToken, "id2": id2]
+            return ["setup_token": setupToken, "business": id2]
         case .payAdyenOrderLocal:
             return [:]
         case .payAdyenOrderCloud:

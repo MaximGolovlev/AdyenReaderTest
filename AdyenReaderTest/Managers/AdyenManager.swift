@@ -25,12 +25,14 @@ class AdyenManager {
     private var paymentService: PaymentService!
     
     private var poid: String {
-        sessionResponse?.installationId ?? ""
+        LocalStorage.poiID ?? connectedDevice?.poid ?? ""
     }
     
     weak var deviceDelegate: AdyenManagerDeviceDelegate?
     
     private var sessionResponse: SessionsResponse?
+    
+    var connectedDevice: AdyenConnectedDevice?
     
     private init() {
         paymentService = PaymentService(delegate: self)
@@ -49,9 +51,9 @@ class AdyenManager {
         }
     }
 
-    func performTransaction(orderUUID: String) async throws -> Transaction.Response {
+    func performTransaction(orderUUID: String, target: UIViewController) async throws -> Transaction.Response {
         let paymentInterface = try await paymentService.getPaymentInterface(with: .cardReader)
-        let presentationMode: TransactionPresentationMode = .viewModifier
+        let presentationMode: TransactionPresentationMode = .presentingViewController(target)
         
         let manager = APIManager.payAdyenOrderLocal(orderUUID: orderUUID, POIID: poid)
         let paymentRequest: AdyenPaymentRequest = try await manager.makeRequest(logsHandler: logsHandler)
@@ -66,9 +68,10 @@ extension AdyenManager: PaymentServiceDelegate {
     
     func register(with setupToken: String) async throws -> String {
         
-        let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: "bsns_1xqU7FT5OorUjbzQsR15KufTfCP")
+        let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: "bsns_2Fl9Ya7vOUWQ47QbL2RP15Rk8Xg")
         let sessionResponse: SessionsResponse = try await manager.makeRequest(logsHandler: logsHandler)
         self.sessionResponse = sessionResponse
+        LocalStorage.poiID = sessionResponse.installationId
         
         return sessionResponse.sdkData
     }
@@ -87,7 +90,9 @@ extension AdyenManager: DeviceManagerDelegate {
     
     func onDeviceConnected(with error: Error?, to manager: AdyenPOS.DeviceManager) {
         if let device = manager.connectedDevice, error == nil {
-            deviceDelegate?.onDeviceConnected(device: AdyenConnectedDevice(device))
+            let connectedDevice = AdyenConnectedDevice(device)
+            self.connectedDevice = connectedDevice
+            deviceDelegate?.onDeviceConnected(device: connectedDevice)
         } else if let error = error {
             deviceDelegate?.onDeviceConnectionFail(with: error)
         }

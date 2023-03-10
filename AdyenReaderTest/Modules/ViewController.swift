@@ -92,8 +92,8 @@ class ViewController: UIViewController {
     @objc private func makeTransactionTapped() {
         Task {
             do {
-                let response = try await adyenManager.performTransaction(orderUUID: LocalStorage.orderUUID ?? "")
-                showAlert(message: "Transaction succeed!")
+                let response = try await adyenManager.performTransaction(orderUUID: LocalStorage.orderUUID ?? "", target: self)
+                print(response)
             } catch let error as AdyenPOSError {
                 showAlert(message: error.description)
             } catch {
