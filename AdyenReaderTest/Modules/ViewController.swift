@@ -94,6 +94,7 @@ class ViewController: UIViewController {
             do {
                 let response = try await adyenManager.performTransaction(orderUUID: LocalStorage.orderUUID ?? "", target: self)
                 print(response)
+                handleLogs(message: Logger.response(request: "adyenManager performTransaction", data: response))
             } catch let error as AdyenPOSError {
                 showAlert(message: error.description)
             } catch {
