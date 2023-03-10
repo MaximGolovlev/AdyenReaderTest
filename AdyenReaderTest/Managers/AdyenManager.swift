@@ -25,7 +25,7 @@ class AdyenManager {
     private var paymentService: PaymentService!
     
     private var poid: String {
-        LocalStorage.poiID ?? connectedDevice?.poid ?? ""
+        (try? paymentService.installationId) ?? ""
     }
     
     weak var deviceDelegate: AdyenManagerDeviceDelegate?
@@ -71,8 +71,6 @@ extension AdyenManager: PaymentServiceDelegate {
         let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: "bsns_2Fl9Ya7vOUWQ47QbL2RP15Rk8Xg")
         let sessionResponse: SessionsResponse = try await manager.makeRequest(logsHandler: logsHandler)
         self.sessionResponse = sessionResponse
-        LocalStorage.poiID = sessionResponse.installationId
-        
         return sessionResponse.sdkData
     }
 

@@ -28,13 +28,4 @@ class LocalStorage {
         }
     }
     
-    static var poiID: String? {
-        set {
-            UserDefaults.standard.set(newValue, forKey: "poiID")
-        }
-        get {
-            return UserDefaults.standard.string(forKey: "poiID")
-        }
-    }
-    
 }
