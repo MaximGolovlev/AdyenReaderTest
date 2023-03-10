@@ -20,8 +20,11 @@ class Logger {
     }
     
     static func response(request: String, data: Data?) -> String? {
-        guard let data = data else { return nil }
-        if let jsonString = String(data: data, encoding: .utf8) {
+        guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else { return nil }
+        
+        let jsonData = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
             let message = "\nHTTP response: \(request)\nParams: \(jsonString)\n"
             print(message)
             return message

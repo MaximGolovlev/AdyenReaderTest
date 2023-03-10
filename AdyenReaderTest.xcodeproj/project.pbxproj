@@ -38,6 +38,7 @@
 		94D6B6FA29BA4303005F5474 /* Mocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F929BA4303005F5474 /* Mocker.swift */; };
 		94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */; };
 		94D6B6FE29BA629E005F5474 /* ViewController+Refreshes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FD29BA629E005F5474 /* ViewController+Refreshes.swift */; };
+		94D6B70029BB6719005F5474 /* AdyenPaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		94D6B6F929BA4303005F5474 /* Mocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocker.swift; sourceTree = "<group>"; };
 		94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Ext.swift"; sourceTree = "<group>"; };
 		94D6B6FD29BA629E005F5474 /* ViewController+Refreshes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Refreshes.swift"; sourceTree = "<group>"; };
+		94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenPaymentResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				94D6B6D929BA042E005F5474 /* AdyenConnectedDevice.swift */,
 				94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */,
 				94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */,
+				94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */,
 				94D6B6E829BA35BA005F5474 /* OrderResponse.swift */,
 				94D6B6EA29BA3611005F5474 /* LoginResponse.swift */,
 			);
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94D6B6E229BA068D005F5474 /* AdyenManager.swift in Sources */,
+				94D6B70029BB6719005F5474 /* AdyenPaymentResponse.swift in Sources */,
 				94D6B6E929BA35BA005F5474 /* OrderResponse.swift in Sources */,
 				94D6B6E729BA1002005F5474 /* Logger.swift in Sources */,
 				94D6B6FA29BA4303005F5474 /* Mocker.swift in Sources */,

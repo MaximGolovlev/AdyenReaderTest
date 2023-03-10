@@ -93,12 +93,14 @@ class ViewController: UIViewController {
         Task {
             do {
                 let response = try await adyenManager.performTransaction(orderUUID: LocalStorage.orderUUID ?? "", target: self)
-                print(response)
                 handleLogs(message: Logger.response(request: "adyenManager performTransaction", data: response))
+                
+               // let object = try JSONDecoder().decode(AdyenPaymentResponse.self, from: response)
+                print(response)
             } catch let error as AdyenPOSError {
                 showAlert(message: error.description)
             } catch {
-                showAlert(message: error.localizedDescription.description)
+                showAlert(message: error.localizedDescription)
             }
         }
     }
