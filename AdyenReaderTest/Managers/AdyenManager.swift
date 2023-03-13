@@ -68,7 +68,7 @@ extension AdyenManager: PaymentServiceDelegate {
     
     func register(with setupToken: String) async throws -> String {
         
-        let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: "bsns_2Fl9Ya7vOUWQ47QbL2RP15Rk8Xg")
+        let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: LocalStorage.restaurant?.id2 ?? "")
         let sessionResponse: SessionsResponse = try await manager.makeRequest(logsHandler: logsHandler)
         self.sessionResponse = sessionResponse
         return sessionResponse.sdkData

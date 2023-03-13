@@ -20,53 +20,28 @@ extension ViewController {
         view.addSubview(logsConsole)
         logsConsole.snp.makeConstraints({ $0.left.right.bottom.equalToSuperview() })
         
-        mainContainer.addArrangedSubviews([connectDeviceButton, tokenContainer, orderUUIDContainer, transactionButton])
+        mainContainer.addArrangedSubviews([loginButton, connectDeviceButton, orderUUIDSection, transactionContainer])
         
-        tokenContainer.addArrangedSubviews([tokenLabel, refreshTokenButton])
-        orderUUIDContainer.addArrangedSubviews([orderUUIDLabel, refreshOrderUUIDButton])
+        transactionContainer.addArrangedSubviews([terminalTransactionButton, transactionButton])
         
         mainContainer.setCustomSpacing(100, after: connectDeviceButton)
     }
     
     func refreshViews() {
-        let tokenButtonTitle = LocalStorage.token == nil ? "Generate\nToken" : "Refresh\nToken"
-        refreshTokenButton.setTitle(tokenButtonTitle, for: .normal)
         
         let orderUUIDButtonTitle = LocalStorage.orderUUID == nil ? "Generate\nOrder UUID" : "Refresh\nOrder UUID"
-        refreshOrderUUIDButton.setTitle(orderUUIDButtonTitle, for: .normal)
+        orderUUIDSection.button.setTitle(orderUUIDButtonTitle, for: .normal)
         
-        orderUUIDLabel.text = LocalStorage.orderUUID
-        tokenLabel.text = LocalStorage.token
-    }
-    
-    func refreshToken() {
-        showAlert(title: "Generate Token", message: nil, loginConfigureation: { tf in
-            tf.placeholder = "Login"
-            tf.text = "admin@admin.com"
-        },passwordConfigureation: { tf in
-            tf.placeholder = "Password"
-            tf.text = "P@ssw0rd"
-        }, cancelTitle: "Continue",cancelHandler: { [weak self] (login, password) in
-            
-            guard let login = login, let password = password else { return }
-            
-            Task {
-                do {
-                    let manager = APIManager.refreshToken(login: login, password: password)
-                    let response: LoginResponse = try await manager.makeRequest(logsHandler: { self?.handleLogs(message: $0) })
-                    LocalStorage.token = response.token
-                    self?.refreshViews()
-                } catch {
-                    self?.showAlert(message: error.localizedDescription)
-                }
-            }
-        })
+        let loginTitle = Globals.isLoggedIn ? "Logout" : "Login"
+        loginButton.setTitle(loginTitle, for: .normal)
+        
+        orderUUIDSection.label.text = LocalStorage.orderUUID
     }
     
     func refreshOrder() {
         Task {
             do {
-                let manager = APIManager.refreshOrderUUID(params: Mocker.orderRequestParams)
+                let manager = APIManager.refreshOrderUUID(params: Mocker.orderRequest)
                 let response: OrderResponse = try await manager.makeRequest(logsHandler: { self.handleLogs(message: $0) })
                 LocalStorage.orderUUID = response.order.uuid
                 refreshViews()
@@ -89,6 +64,14 @@ extension ViewController {
             let bottom = NSMakeRange(location, 1)
             textView.scrollRangeToVisible(bottom)
         }
+    }
+    
+    @objc func loginButtonTapped() {
+        
+        let vc = LoginViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        present(nav, animated: true)
+        
     }
     
 }

@@ -17,41 +17,9 @@ class ViewController: UIViewController {
         return $0
     }(UIStackView())
     
-    var tokenContainer: UIStackView = {
-        $0.axis = .horizontal
-        $0.spacing = 20
-        return $0
-    }(UIStackView())
-    
-    var tokenLabel: UILabel = {
-        $0.text = LocalStorage.token
-        $0.numberOfLines = 0
-        return $0
-    }(UILabel())
-    
-    lazy var refreshTokenButton: UIButton = {
-        $0.titleLabel?.lineBreakMode = .byWordWrapping
-        $0.addTarget(self, action: #selector(refreshTokenTapped), for: .touchUpInside)
-        $0.snp.makeConstraints({ $0.width.equalTo(120) })
-        return $0
-    }(UIButton(type: .system))
-    
-    var orderUUIDContainer: UIStackView = {
-        $0.axis = .horizontal
-        $0.spacing = 20
-        return $0
-    }(UIStackView())
-    
-    var orderUUIDLabel: UILabel = {
-        $0.text = LocalStorage.orderUUID
-        $0.numberOfLines = 0
-        return $0
-    }(UILabel())
-    
-    lazy var refreshOrderUUIDButton: UIButton = {
-        $0.titleLabel?.lineBreakMode = .byWordWrapping
-        $0.addTarget(self, action: #selector(refreshOrderUUIDTapped), for: .touchUpInside)
-        $0.snp.makeConstraints({ $0.width.equalTo(120) })
+    lazy var loginButton: UIButton = {
+        $0.setTitle("Login", for: .normal)
+        $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
     
@@ -61,8 +29,26 @@ class ViewController: UIViewController {
         return $0
     }(UIButton(type: .system))
     
+    lazy var orderUUIDSection = SectionView(tapHandler: { [weak self] sectionView in
+        self?.refreshOrder()
+    })
+    
+    var transactionContainer: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 20
+        return $0
+    }(UIStackView())
+    
+    lazy var terminalTransactionButton: UIButton = {
+        $0.titleLabel?.lineBreakMode = .byWordWrapping
+        $0.setTitle("Make\nTerminal Transaction", for: .normal)
+        $0.addTarget(self, action: #selector(makeTerminalTransactionTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
     lazy var transactionButton: UIButton = {
-        $0.setTitle("Make Transaction", for: .normal)
+        $0.titleLabel?.lineBreakMode = .byWordWrapping
+        $0.setTitle("Make\nReader Transaction", for: .normal)
         $0.addTarget(self, action: #selector(makeTransactionTapped), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
@@ -85,6 +71,14 @@ class ViewController: UIViewController {
         adyenManager.logsHandler = handleLogs(message:)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !Globals.isLoggedIn {
+            loginButtonTapped()
+        }
+    }
+    
     @objc private func connectButtonTapped() {
         adyenManager.presentDeviceManagement(target: self)
     }
@@ -105,13 +99,37 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc private func refreshTokenTapped() {
-        refreshToken()
+    @objc private func makeTerminalTransactionTapped() {
+        
+        showAlert(title: "Terminal Transaction", message: "Model and Serial", loginConfigureation: { tf in
+            tf.placeholder = "e285p"
+            tf.text = LocalStorage.terminalModel ?? "e285p"
+        },passwordConfigureation: { tf in
+            tf.placeholder = "805373610"
+            tf.text = LocalStorage.terminalSerial ?? "805373610"
+        }, cancelTitle: "Continue",cancelHandler: { [weak self] (model, serial) in
+            
+            guard let model = model, let serial = serial else { return }
+            
+            LocalStorage.terminalModel = model
+            LocalStorage.terminalSerial = serial
+            
+            let poid = "\(model)-\(serial)"
+            
+            Task {
+                do {
+                    let orderId = LocalStorage.orderUUID ?? ""
+                    let _: VoidResponse = try await APIManager.payWithAdyenTerminal(orderUUID: orderId, POIID: poid).makeRequest(logsHandler: { self?.handleLogs(message: $0) })
+                    
+                } catch let error as AdyenPOSError {
+                    self?.showAlert(message: error.description)
+                } catch {
+                    self?.showAlert(message: error.localizedDescription)
+                }
+            }
+        })
     }
     
-    @objc private func refreshOrderUUIDTapped() {
-        refreshOrder()
-    }
     
 }
 

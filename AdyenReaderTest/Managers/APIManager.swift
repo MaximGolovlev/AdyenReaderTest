@@ -17,8 +17,12 @@ enum APIManager {
     case payAdyenOrderCloud(orderUUID: String, POIID: String)
     case checkAdyenPayment(orderUUID: String)
     
+    case payWithAdyenTerminal(orderUUID: String, POIID: String)
+    
+    case auth
+    
     var baseURL: String {
-        return "https://zdash-allburov.getrevi.com"
+        return LocalStorage.environment.url
     }
     
     var token: String {
@@ -39,6 +43,10 @@ enum APIManager {
             return "/api/orders/\(orderUUID)/pay/adyen/via-terminal/"
         case .checkAdyenPayment(let orderUUID):
             return "/api/orders/\(orderUUID)/pay/adyen/check/"
+        case .payWithAdyenTerminal(let orderUUID, _):
+            return "/api/orders/\(orderUUID)/pay/adyen/via-terminal/"
+        case .auth:
+            return "/auth/partner/me/"
         }
     }
     
@@ -56,6 +64,10 @@ enum APIManager {
             return .get
         case .checkAdyenPayment:
             return .post
+        case .payWithAdyenTerminal:
+            return .post
+        case .auth:
+            return .get
         }
     }
     
@@ -74,6 +86,10 @@ enum APIManager {
             return [:]
         case .checkAdyenPayment:
             return [:]
+        case .payWithAdyenTerminal(_, let POIID):
+            return ["POIID": POIID]
+        case .auth:
+            return [:]
         }
     }
     
@@ -91,6 +107,10 @@ enum APIManager {
             return [("POIID", POIID)]
         case .checkAdyenPayment:
             return []
+        case .payWithAdyenTerminal:
+            return []
+        case .auth:
+            return [("expand", "businesses"), ("expand", "permissions")]
         }
     }
     
@@ -104,7 +124,7 @@ enum APIManager {
         }
     }
     
-    func makeRequest<T: Codable>(logsHandler: ((String?) -> ())?) async throws -> T {
+    func makeRequest<T: Codable>(logsHandler: ((String?) -> ())? = nil) async throws -> T {
         
         let urlPath = baseURL + method
         var urlComponents = URLComponents(string: urlPath)

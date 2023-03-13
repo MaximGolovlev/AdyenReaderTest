@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		941FF32429BF3D5C001BD756 /* VoidResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF32329BF3D5C001BD756 /* VoidResponse.swift */; };
+		941FF32729BF3F5E001BD756 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF32629BF3F5E001BD756 /* SectionView.swift */; };
+		941FF32929BF57DC001BD756 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF32829BF57DC001BD756 /* LoginViewController.swift */; };
+		941FF32B29BF6B5C001BD756 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF32A29BF6B5C001BD756 /* Constants.swift */; };
+		941FF32D29BF6F1B001BD756 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF32C29BF6F1B001BD756 /* AuthResponse.swift */; };
+		941FF32F29BF6F83001BD756 /* Restaurnat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF32E29BF6F83001BD756 /* Restaurnat.swift */; };
+		941FF33129BF74CE001BD756 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF33029BF74CE001BD756 /* String+Ext.swift */; };
+		941FF33329BF7571001BD756 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF33229BF7571001BD756 /* Globals.swift */; };
 		94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FE828CF408E005A1E94 /* TerminalAPIKit */; };
 		94814FF228CF8148005A1E94 /* Adyen in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF128CF8148005A1E94 /* Adyen */; };
 		94814FF428CF8148005A1E94 /* AdyenActions in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF328CF8148005A1E94 /* AdyenActions */; };
@@ -42,6 +50,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		941FF32329BF3D5C001BD756 /* VoidResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResponse.swift; sourceTree = "<group>"; };
+		941FF32629BF3F5E001BD756 /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
+		941FF32829BF57DC001BD756 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		941FF32A29BF6B5C001BD756 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		941FF32C29BF6F1B001BD756 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
+		941FF32E29BF6F83001BD756 /* Restaurnat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurnat.swift; sourceTree = "<group>"; };
+		941FF33029BF74CE001BD756 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		941FF33229BF7571001BD756 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		94D5858128CA0B6D00F01AE2 /* AdyenReaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdyenReaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D5858428CA0B6D00F01AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94D5858628CA0B6D00F01AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		941FF32529BF3E82001BD756 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				941FF32629BF3F5E001BD756 /* SectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		94814FFE28D0BDC2005A1E94 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +123,9 @@
 				94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */,
 				94D6B6E829BA35BA005F5474 /* OrderResponse.swift */,
 				94D6B6EA29BA3611005F5474 /* LoginResponse.swift */,
+				941FF32329BF3D5C001BD756 /* VoidResponse.swift */,
+				941FF32C29BF6F1B001BD756 /* AuthResponse.swift */,
+				941FF32E29BF6F83001BD756 /* Restaurnat.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -119,6 +146,7 @@
 		9481500028D0BDE2005A1E94 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				941FF32829BF57DC001BD756 /* LoginViewController.swift */,
 				94D5858828CA0B6D00F01AE2 /* ViewController.swift */,
 				94D6B6FD29BA629E005F5474 /* ViewController+Refreshes.swift */,
 			);
@@ -160,6 +188,7 @@
 				94D6B6E529BA088D005F5474 /* Helpers */,
 				9481500128D0BDF3005A1E94 /* Managers */,
 				9481500028D0BDE2005A1E94 /* Modules */,
+				941FF32529BF3E82001BD756 /* Views */,
 				94814FFE28D0BDC2005A1E94 /* Models */,
 			);
 			path = AdyenReaderTest;
@@ -171,6 +200,7 @@
 				94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */,
 				94D6B6E329BA0853005F5474 /* UIViewController+Ext.swift */,
 				94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */,
+				941FF33029BF74CE001BD756 /* String+Ext.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -179,6 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				94D6B6F929BA4303005F5474 /* Mocker.swift */,
+				941FF32A29BF6B5C001BD756 /* Constants.swift */,
+				941FF33229BF7571001BD756 /* Globals.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -278,18 +310,26 @@
 				94D6B6E729BA1002005F5474 /* Logger.swift in Sources */,
 				94D6B6FA29BA4303005F5474 /* Mocker.swift in Sources */,
 				94D6B6E029BA0667005F5474 /* APIManager.swift in Sources */,
+				941FF32B29BF6B5C001BD756 /* Constants.swift in Sources */,
 				94D6B6DA29BA042E005F5474 /* AdyenConnectedDevice.swift in Sources */,
+				941FF33329BF7571001BD756 /* Globals.swift in Sources */,
+				941FF32F29BF6F83001BD756 /* Restaurnat.swift in Sources */,
 				94D6B6FE29BA629E005F5474 /* ViewController+Refreshes.swift in Sources */,
 				94D6B6ED29BA3971005F5474 /* LocalStorage.swift in Sources */,
 				94D6B6F729BA3CD2005F5474 /* UIStackView+Ext.swift in Sources */,
+				941FF32929BF57DC001BD756 /* LoginViewController.swift in Sources */,
+				941FF32429BF3D5C001BD756 /* VoidResponse.swift in Sources */,
+				941FF33129BF74CE001BD756 /* String+Ext.swift in Sources */,
 				94D6B6E429BA0853005F5474 /* UIViewController+Ext.swift in Sources */,
 				94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */,
 				94D6B6EB29BA3611005F5474 /* LoginResponse.swift in Sources */,
 				94D5858928CA0B6D00F01AE2 /* ViewController.swift in Sources */,
 				94D6B6D829BA040F005F5474 /* AdyenDevice.swift in Sources */,
 				94D6B6DE29BA045C005F5474 /* AdyenPaymentRequest.swift in Sources */,
+				941FF32729BF3F5E001BD756 /* SectionView.swift in Sources */,
 				94D6B6DC29BA0446005F5474 /* SessionsResponse.swift in Sources */,
 				94D5858528CA0B6D00F01AE2 /* AppDelegate.swift in Sources */,
+				941FF32D29BF6F1B001BD756 /* AuthResponse.swift in Sources */,
 				94D5858728CA0B6D00F01AE2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,7 +477,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -471,7 +511,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
