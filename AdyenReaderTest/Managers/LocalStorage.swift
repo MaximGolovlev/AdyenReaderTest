@@ -10,12 +10,18 @@ import Foundation
 
 class LocalStorage {
     
-    static var orderUUID: String? {
-        set {
-            UserDefaults.standard.set(newValue, forKey: "orderUUID")
+    static var order: Order? {
+        set(order) {
+            UserDefaults.standard.set(order?.uuid, forKey: "order.UUID")
+            UserDefaults.standard.set(order?.paymentStatus, forKey: "order.paymentStatus")
         }
         get {
-            return UserDefaults.standard.string(forKey: "orderUUID")
+            guard let uuid = UserDefaults.standard.string(forKey: "order.UUID"),
+                  let paymentStatus = UserDefaults.standard.string(forKey: "order.paymentStatus") else {
+                return nil
+            }
+            
+            return Order(uuid: uuid, paymentStatus: paymentStatus)
         }
     }
     

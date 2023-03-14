@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
         
         configViews()
@@ -90,6 +90,11 @@ class LoginViewController: UIViewController {
         })
         alert.addAction(production)
         
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+
+        })
+        alert.addAction(cancel)
+        
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -134,6 +139,11 @@ class LoginViewController: UIViewController {
             })
             alert.addAction(action)
         })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+
+        })
+        alert.addAction(cancel)
         
         self.present(alert, animated: true, completion: nil)
         
