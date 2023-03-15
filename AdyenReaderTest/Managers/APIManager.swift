@@ -172,8 +172,13 @@ enum APIManager {
                 
             } else {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                
+                if let string = json?["status"] as? String, let status = StatusMessage(rawValue: string) {
+                    throw status
+                }
+                
                 if let detail = json?["detail"] as? String {
-                    throw NetworkAuthError.customError("\(detail)")
+                    throw NetworkAuthError.customError(detail)
                 } else {
                     let message = json.map({ "\($0)" }) ?? "Empty"
                     throw NetworkAuthError.customError(message)
@@ -209,7 +214,29 @@ enum NetworkAuthError: Error, LocalizedError {
             )
         }
     }
+}
 
+enum StatusMessage: String, Error {
+    case Aborted
+    case InProgress
+    case NotFound
+    case Cancel
+    case Busy
+    
+    var title: String {
+        switch self {
+        case .Aborted:
+            return "Aborted"
+        case .InProgress:
+            return "In Progress"
+        case .NotFound:
+            return "Not Found"
+        case .Cancel:
+            return "Canceled"
+        case .Busy:
+            return "Busy"
+        }
+    }
 }
 
 enum HTTPMethod: String {

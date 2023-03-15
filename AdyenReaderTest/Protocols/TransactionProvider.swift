@@ -24,11 +24,36 @@ protocol TransactionProvider {
 
 extension TransactionProvider where Self: UIViewController {
     
-    
     func refreshOrder() {
+        presentOrderTypePicker()
+    }
+    
+    private func presentOrderTypePicker() {
+        
+        let alert = UIAlertController(title: "Choose Order Type", message: nil, preferredStyle: .actionSheet)
+        
+        let types = OrderRequestMock.allCases
+        
+        types.forEach({ type in
+            let action = UIAlertAction(title: type.title, style: .default, handler: { _ in
+                self.refreshOrder(request: type)
+            })
+            alert.addAction(action)
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+
+        })
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    private func refreshOrder(request: OrderRequestMock) {
         Task {
             do {
-                let manager = APIManager.refreshOrderUUID(params: Mocker.orderRequest)
+                let manager = APIManager.refreshOrderUUID(params: request.orderRequest)
                 let response: OrderResponse = try await manager.makeRequest(logsHandler: { self.handleLogs(message: $0) })
                 LocalStorage.order = response.order
                 DispatchQueue.main.async {
@@ -73,29 +98,55 @@ extension TransactionProvider where Self: UIViewController {
         }
     }
     
-    func makeTerminalTransaction(completion: (() -> ())?) {
+    func presentTerminalPicker(completion: ((Terminal) -> Void)?) {
         
-        showTwoButtonAlert(title: "Terminal Transaction", message: "Model and Serial", loginConfigureation: { tf in
+        let alert = UIAlertController(title: "Choose Terminal", message: nil, preferredStyle: .actionSheet)
+        
+        let newTerminal = UIAlertAction(title: "Add New", style: .default, handler: { _ in
+            self.addNewTerminalAlert(completion: completion)
+        })
+        alert.addAction(newTerminal)
+        
+        let terminals = LocalStorage.terminals.sorted(by: { $0.time < $1.time })
+        
+        terminals.forEach({ terminal in
+            let action = UIAlertAction(title: terminal.poiid, style: .default, handler: { _ in
+                LocalStorage.selectedTerminal = terminal
+                completion?(terminal)
+            })
+            alert.addAction(action)
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+
+        })
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func addNewTerminalAlert(completion: ((Terminal) -> Void)?) {
+        showTwoButtonAlert(title: "Add New Terminal", message: "Model and Serial", loginConfigureation: { tf in
             tf.placeholder = "e285p"
-            tf.text = LocalStorage.terminalModel ?? "e285p"
         },passwordConfigureation: { tf in
             tf.placeholder = "805373610"
-            tf.text = LocalStorage.terminalSerial ?? "805373610"
         }, okButtonTitle: "Continue",
-                           okHandler: { [weak self] (model, serial) in
+                           okHandler: { (model, serial) in
             
             guard let model = model, let serial = serial else { return }
             
-            LocalStorage.terminalModel = model
-            LocalStorage.terminalSerial = serial
+            let terminal = Terminal(model: model, serial: serial, time: Date().timeIntervalSince1970)
+            var savedTermainals = LocalStorage.terminals
+            savedTermainals.append(terminal)
+            LocalStorage.terminals = savedTermainals
             
-            let poid = "\(model)-\(serial)"
+            LocalStorage.selectedTerminal = terminal
             
-            self?.makeTerminalTransaction(poid: poid, completion: completion)
+            completion?(terminal)
         })
     }
     
-    private func makeTerminalTransaction(poid: String, completion: (() -> ())?) {
+    func makeTerminalTransaction(poid: String, completion: (() -> ())?) {
         Task {
             do {
                 let response: TerminalPaymentResponse = try await APIManager.payWithAdyenTerminal(orderUUID: orderUUID, POIID: poid).makeRequest(logsHandler: { self.handleLogs(message: $0) })

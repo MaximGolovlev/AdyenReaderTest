@@ -29,6 +29,12 @@ class TerminalViewController: UIViewController, TransactionProvider {
         self?.refreshOrder()
     })
     
+    lazy var terminalSection = SectionView(tapHandler: { [weak self] sectionView in
+        self?.presentTerminalPicker() { [weak self] _ in
+            self?.refreshViews()
+        }
+    })
+    
     lazy var transactionButton: UIButton = {
         $0.setTitle("Make Transaction", for: .normal)
         $0.addTarget(self, action: #selector(makeTransactionTapped), for: .touchUpInside)
@@ -67,7 +73,7 @@ class TerminalViewController: UIViewController, TransactionProvider {
         view.addSubview(logsConsole)
         logsConsole.snp.makeConstraints({ $0.left.right.bottom.equalToSuperview() })
         
-        mainContainer.addArrangedSubviews([orderUUIDSection, transactionButton])
+        mainContainer.addArrangedSubviews([orderUUIDSection, terminalSection, transactionButton])
 
     }
     
@@ -76,18 +82,34 @@ class TerminalViewController: UIViewController, TransactionProvider {
         orderUUIDSection.button.setTitle(orderUUIDButtonTitle, for: .normal)
         
         orderUUIDSection.label.text = orderUUID
+        
+        let terminalButtonTitle = orderUUID.isEmpty ? "Add new\nTerminal" : "Change\nTerminal"
+        terminalSection.button.setTitle(terminalButtonTitle, for: .normal)
+    
+
+        terminalSection.label.text = LocalStorage.selectedTerminal?.poiid
     }
     
     @objc private func makeTransactionTapped() {
     
-        guard LocalStorage.order?.paymentStatus == "UNPAID" else {
+        guard let order = LocalStorage.order else {
+            showAlert(message: "Order is empty")
+            return
+        }
+        
+        guard order.paymentStatus == "UNPAID" else {
             showAlert(message: "Order has already been paid")
             return
         }
         
-        self.makeTerminalTransaction() {
+        guard let terminal = LocalStorage.selectedTerminal else {
+            showAlert(message: "Please select a terminal")
+            return
+        }
+        
+        self.makeTerminalTransaction(poid: terminal.poiid) {
             DispatchQueue.main.async {
-                let vc = TerminalPaymentScreen()
+                let vc = TerminalPaymentScreen(order: order)
                 self.present(vc, animated: true)
             }
         }

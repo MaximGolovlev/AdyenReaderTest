@@ -14,14 +14,18 @@ class LocalStorage {
         set(order) {
             UserDefaults.standard.set(order?.uuid, forKey: "order.UUID")
             UserDefaults.standard.set(order?.paymentStatus, forKey: "order.paymentStatus")
+            UserDefaults.standard.set(order?.totalCents, forKey: "order.total")
         }
         get {
+            
+            let paymentTotal = UserDefaults.standard.integer(forKey: "order.total")
+            
             guard let uuid = UserDefaults.standard.string(forKey: "order.UUID"),
                   let paymentStatus = UserDefaults.standard.string(forKey: "order.paymentStatus") else {
                 return nil
             }
             
-            return Order(uuid: uuid, paymentStatus: paymentStatus)
+            return Order(uuid: uuid, paymentStatus: paymentStatus, total: paymentTotal)
         }
     }
     
@@ -48,28 +52,38 @@ class LocalStorage {
         }
     }
     
-    static var terminalModel: String? {
-        set {
-            UserDefaults.standard.set(newValue, forKey: "terminalModel")
+    static var terminals: [Terminal] {
+        set(terminals) {
+            if let encoded = try? JSONEncoder().encode(terminals){
+                UserDefaults.standard.set(encoded, forKey: "terminal_objs")
+            }
         }
         get {
-            return UserDefaults.standard.string(forKey: "terminalModel")
+            if let objects = UserDefaults.standard.value(forKey: "terminal_objs") as? Data, let objectsDecoded = try? JSONDecoder().decode(Array.self, from: objects) as [Terminal] {
+                return objectsDecoded
+            }
+            return []
         }
     }
     
-    static var terminalSerial: String? {
-        set {
-            UserDefaults.standard.set(newValue, forKey: "terminalSerial")
+    static var selectedTerminal: Terminal? {
+        set(terminal) {
+            if let encoded = try? JSONEncoder().encode(terminal){
+                UserDefaults.standard.set(encoded, forKey: "selectedTerminal")
+            }
         }
         get {
-            return UserDefaults.standard.string(forKey: "terminalSerial")
+            if let data = UserDefaults.standard.value(forKey: "selectedTerminal") as? Data, let objectDecoded = try? JSONDecoder().decode(Terminal.self, from: data) as Terminal {
+                return objectDecoded
+            }
+            return nil
         }
     }
     
     static var environment: Environment {
         get {
             guard let environment = UserDefaults.standard.value(forKey: "Environment") as? String,
-                    let obj = Environment(rawValue: environment) else {
+                  let obj = Environment(rawValue: environment) else {
                 return .allburov
             }
             return obj

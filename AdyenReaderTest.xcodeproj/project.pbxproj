@@ -21,6 +21,8 @@
 		941FF34029C0B225001BD756 /* TransactionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF33F29C0B225001BD756 /* TransactionProvider.swift */; };
 		941FF34229C0BAFC001BD756 /* TerminalPaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34129C0BAFC001BD756 /* TerminalPaymentResponse.swift */; };
 		941FF34429C0BBC2001BD756 /* TerminalPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34329C0BBC2001BD756 /* TerminalPaymentScreen.swift */; };
+		941FF34629C1CDEB001BD756 /* NSNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */; };
+		941FF34829C1D44C001BD756 /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34729C1D44C001BD756 /* Terminal.swift */; };
 		94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FE828CF408E005A1E94 /* TerminalAPIKit */; };
 		94814FF228CF8148005A1E94 /* Adyen in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF128CF8148005A1E94 /* Adyen */; };
 		94814FF428CF8148005A1E94 /* AdyenActions in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF328CF8148005A1E94 /* AdyenActions */; };
@@ -47,7 +49,7 @@
 		94D6B6F229BA3C1E005F5474 /* AdyenPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94D6B6F129BA3C1E005F5474 /* AdyenPOS */; };
 		94D6B6F529BA3C74005F5474 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94D6B6F429BA3C74005F5474 /* SnapKit */; };
 		94D6B6F729BA3CD2005F5474 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */; };
-		94D6B6FA29BA4303005F5474 /* Mocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F929BA4303005F5474 /* Mocker.swift */; };
+		94D6B6FA29BA4303005F5474 /* OrderRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F929BA4303005F5474 /* OrderRequestMock.swift */; };
 		94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */; };
 		94D6B70029BB6719005F5474 /* AdyenPaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		941FF33F29C0B225001BD756 /* TransactionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionProvider.swift; sourceTree = "<group>"; };
 		941FF34129C0BAFC001BD756 /* TerminalPaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalPaymentResponse.swift; sourceTree = "<group>"; };
 		941FF34329C0BBC2001BD756 /* TerminalPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalPaymentScreen.swift; sourceTree = "<group>"; };
+		941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNumberFormatter.swift; sourceTree = "<group>"; };
+		941FF34729C1D44C001BD756 /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		94D5858128CA0B6D00F01AE2 /* AdyenReaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdyenReaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D5858428CA0B6D00F01AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94D5858628CA0B6D00F01AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,7 +89,7 @@
 		94D6B6EA29BA3611005F5474 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		94D6B6EC29BA3971005F5474 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
-		94D6B6F929BA4303005F5474 /* Mocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocker.swift; sourceTree = "<group>"; };
+		94D6B6F929BA4303005F5474 /* OrderRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestMock.swift; sourceTree = "<group>"; };
 		94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Ext.swift"; sourceTree = "<group>"; };
 		94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenPaymentResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +178,7 @@
 				941FF32C29BF6F1B001BD756 /* AuthResponse.swift */,
 				941FF32E29BF6F83001BD756 /* Restaurnat.swift */,
 				941FF34129C0BAFC001BD756 /* TerminalPaymentResponse.swift */,
+				941FF34729C1D44C001BD756 /* Terminal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				94D6B6E329BA0853005F5474 /* UIViewController+Ext.swift */,
 				94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */,
 				941FF33029BF74CE001BD756 /* String+Ext.swift */,
+				941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -257,7 +263,7 @@
 		94D6B6F829BA4287005F5474 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				94D6B6F929BA4303005F5474 /* Mocker.swift */,
+				94D6B6F929BA4303005F5474 /* OrderRequestMock.swift */,
 				941FF32A29BF6B5C001BD756 /* Constants.swift */,
 				941FF33229BF7571001BD756 /* Globals.swift */,
 			);
@@ -356,7 +362,7 @@
 				94D6B70029BB6719005F5474 /* AdyenPaymentResponse.swift in Sources */,
 				94D6B6E929BA35BA005F5474 /* OrderResponse.swift in Sources */,
 				94D6B6E729BA1002005F5474 /* Logger.swift in Sources */,
-				94D6B6FA29BA4303005F5474 /* Mocker.swift in Sources */,
+				94D6B6FA29BA4303005F5474 /* OrderRequestMock.swift in Sources */,
 				941FF33D29C0B10D001BD756 /* ReaderViewController.swift in Sources */,
 				94D6B6E029BA0667005F5474 /* APIManager.swift in Sources */,
 				941FF33729C0AF0E001BD756 /* FeedViewController.swift in Sources */,
@@ -368,10 +374,12 @@
 				94D6B6ED29BA3971005F5474 /* LocalStorage.swift in Sources */,
 				94D6B6F729BA3CD2005F5474 /* UIStackView+Ext.swift in Sources */,
 				941FF32929BF57DC001BD756 /* LoginViewController.swift in Sources */,
+				941FF34629C1CDEB001BD756 /* NSNumberFormatter.swift in Sources */,
 				941FF32429BF3D5C001BD756 /* VoidResponse.swift in Sources */,
 				941FF33129BF74CE001BD756 /* String+Ext.swift in Sources */,
 				94D6B6E429BA0853005F5474 /* UIViewController+Ext.swift in Sources */,
 				941FF34029C0B225001BD756 /* TransactionProvider.swift in Sources */,
+				941FF34829C1D44C001BD756 /* Terminal.swift in Sources */,
 				94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */,
 				94D6B6EB29BA3611005F5474 /* LoginResponse.swift in Sources */,
 				94D6B6D829BA040F005F5474 /* AdyenDevice.swift in Sources */,
@@ -521,7 +529,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -530,7 +538,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Our app uses bluetooth to find, connect and transfer data between different devices";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
@@ -555,7 +563,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -564,7 +572,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Our app uses bluetooth to find, connect and transfer data between different devices";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;

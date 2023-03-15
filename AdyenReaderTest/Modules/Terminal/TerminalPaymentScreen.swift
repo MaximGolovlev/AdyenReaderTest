@@ -25,6 +25,13 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         return $0
     }(UIStackView())
     
+    
+    let priceLabel: UILabel = {
+        $0.numberOfLines = 0
+        $0.font = .systemFont(ofSize: 30)
+       return $0
+    }(UILabel())
+    
     let titleLabel: UILabel = {
         $0.numberOfLines = 0
         $0.text = "Please complete payment\nusing terminal"
@@ -42,10 +49,12 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         return $0
     }(UITextView())
     
-    init() {
+    init(order: Order) {
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = .systemBackground
+        
+        priceLabel.text = order.totalString
     }
     
     required init?(coder: NSCoder) {
@@ -55,8 +64,9 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configViews()
         progressLoader.startAnimating()
+        progressLoader.alpha = 0
+        configViews()
         checkPayment()
     }
     
@@ -67,7 +77,7 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
             $0.left.right.equalToSuperview().inset(20)
         })
         
-        mainContainer.addArrangedSubviews([titleLabel, progressLoader, logsConsole])
+        mainContainer.addArrangedSubviews([priceLabel, titleLabel, progressLoader, logsConsole])
         
         logsConsole.snp.makeConstraints({ $0.left.right.equalToSuperview() })
     }
@@ -81,15 +91,29 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
                 if order.paymentStatus == "PAID" {
                     self?.completeTransaction(order: order)
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                        self?.checkPayment()
-                    })
+                    self?.continueChecking()
+                }
+            } catch let status as StatusMessage {
+                
+                switch status {
+                case .InProgress:
+                    progressLoader.alpha = 1
+                    continueChecking()
+                default :
+                    progressLoader.alpha = 0
+                    showAlert(message: status.title, cancelHandler: { _,_ in self?.dismiss(animated: true) })
                 }
                 
             } catch {
                 showAlert(message: error.localizedDescription)
             }
         }
+    }
+    
+    func continueChecking() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.checkPayment()
+        })
     }
     
     func refreshViews() {
