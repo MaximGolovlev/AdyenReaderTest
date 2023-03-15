@@ -26,11 +26,11 @@ class TerminalViewController: UIViewController, TransactionProvider {
     }(UIStackView())
     
     lazy var orderUUIDSection = SectionView(tapHandler: { [weak self] sectionView in
-        self?.refreshOrder()
+        self?.presentOrderTypePicker(sourceView: sectionView.button)
     })
     
     lazy var terminalSection = SectionView(tapHandler: { [weak self] sectionView in
-        self?.presentTerminalPicker() { [weak self] _ in
+        self?.presentTerminalPicker(sourceView: sectionView.button) { [weak self] _ in
             self?.refreshViews()
         }
     })
@@ -73,7 +73,7 @@ class TerminalViewController: UIViewController, TransactionProvider {
         view.addSubview(logsConsole)
         logsConsole.snp.makeConstraints({ $0.left.right.bottom.equalToSuperview() })
         
-        mainContainer.addArrangedSubviews([orderUUIDSection, terminalSection, transactionButton])
+        mainContainer.addArrangedSubviews([terminalSection, orderUUIDSection, transactionButton])
 
     }
     

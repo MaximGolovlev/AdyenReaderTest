@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
     }(UIStackView())
     
     lazy var environmentSection = SectionView(buttonTitle: "Change Environment", tapHandler: { [weak self] sectionView in
-        self?.changeEnvironment()
+        self?.changeEnvironment(sourceView: sectionView.button)
     })
     
     lazy var tokenSection = SectionView(tapHandler: { [weak self] sectionView in
@@ -68,7 +68,7 @@ class LoginViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.isEnabled = Globals.isLoggedIn
     }
     
-    func changeEnvironment() {
+    func changeEnvironment(sourceView: UIView) {
         
         let alert = UIAlertController(title: "Choose Envoronment", message: nil, preferredStyle: .actionSheet)
         
@@ -94,6 +94,9 @@ class LoginViewController: UIViewController {
 
         })
         alert.addAction(cancel)
+        
+        alert.popoverPresentationController?.sourceView = sourceView
+        alert.popoverPresentationController?.sourceRect = sourceView.frame
         
         self.present(alert, animated: true, completion: nil)
         
@@ -121,14 +124,14 @@ class LoginViewController: UIViewController {
             do {
                 let response: AuthResponse = try await APIManager.auth.makeRequest()
                 let locations = response.locations
-                presentLocationPicker(locations: locations)
+                presentLocationPicker(sourceView: restaurantSection.button, locations: locations)
             } catch {
                 self.showAlert(message: error.localizedDescription)
             }
         }
     }
     
-    func presentLocationPicker(locations: [Restaurant]) {
+    func presentLocationPicker(sourceView: UIView, locations: [Restaurant]) {
         
         let alert = UIAlertController(title: "Choose Restaurant", message: nil, preferredStyle: .actionSheet)
         
@@ -144,6 +147,9 @@ class LoginViewController: UIViewController {
 
         })
         alert.addAction(cancel)
+        
+        alert.popoverPresentationController?.sourceView = sourceView
+        alert.popoverPresentationController?.sourceRect = sourceView.frame
         
         self.present(alert, animated: true, completion: nil)
         

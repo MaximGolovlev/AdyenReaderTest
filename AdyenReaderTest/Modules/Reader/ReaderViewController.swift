@@ -33,7 +33,7 @@ class ReaderViewController: UIViewController, TransactionProvider {
     
     
     lazy var orderUUIDSection = SectionView(tapHandler: { [weak self] sectionView in
-        self?.refreshOrder()
+        self?.presentOrderTypePicker(sourceView: sectionView.button)
     })
     
     lazy var transactionButton: UIButton = {

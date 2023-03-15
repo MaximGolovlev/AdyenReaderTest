@@ -16,19 +16,16 @@ protocol TransactionProvider {
     
     func makeReaderTransaction()
     
-    func refreshOrder()
+    func refreshViews()
     func handleLogs(message: String?)
     func scrollTextViewToBottom(textView: UITextView)
-    func refreshViews()
+    func presentOrderTypePicker(sourceView: UIView)
 }
 
 extension TransactionProvider where Self: UIViewController {
+
     
-    func refreshOrder() {
-        presentOrderTypePicker()
-    }
-    
-    private func presentOrderTypePicker() {
+    func presentOrderTypePicker(sourceView: UIView) {
         
         let alert = UIAlertController(title: "Choose Order Type", message: nil, preferredStyle: .actionSheet)
         
@@ -45,6 +42,9 @@ extension TransactionProvider where Self: UIViewController {
 
         })
         alert.addAction(cancel)
+        
+        alert.popoverPresentationController?.sourceView = sourceView
+        alert.popoverPresentationController?.sourceRect = sourceView.frame
         
         self.present(alert, animated: true, completion: nil)
         
@@ -98,7 +98,7 @@ extension TransactionProvider where Self: UIViewController {
         }
     }
     
-    func presentTerminalPicker(completion: ((Terminal) -> Void)?) {
+    func presentTerminalPicker(sourceView: UIView, completion: ((Terminal) -> Void)?) {
         
         let alert = UIAlertController(title: "Choose Terminal", message: nil, preferredStyle: .actionSheet)
         
@@ -121,6 +121,9 @@ extension TransactionProvider where Self: UIViewController {
 
         })
         alert.addAction(cancel)
+        
+        alert.popoverPresentationController?.sourceView = sourceView
+        alert.popoverPresentationController?.sourceRect = sourceView.frame
         
         self.present(alert, animated: true, completion: nil)
     }
