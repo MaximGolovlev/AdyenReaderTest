@@ -25,6 +25,7 @@ struct Order: Codable {
     var uuid: String?
     var paymentStatus: String?
     var totalCents: Int
+    var tipsCents: Int
     
     var total: Float {
         return Float(totalCents) / 100
@@ -35,16 +36,20 @@ struct Order: Codable {
         return string
     }
     
+    var tips: Float {
+        return Float(tipsCents) / 100
+    }
+    
+    var tipsString: String? {
+        let string = NumberFormatter.currency.string(for: tips)
+        return string
+    }
+    
     enum CodingKeys: String, CodingKey {
         case uuid
         case paymentStatus = "payment_status"
         case totalCents = "total_cents"
-    }
-    
-    init(uuid: String?, paymentStatus: String?, total: Int) {
-        self.uuid = uuid
-        self.paymentStatus = paymentStatus
-        self.totalCents = total
+        case tipsCents = "tips_cents"
     }
     
     init(from decoder: Decoder) throws {
@@ -52,5 +57,6 @@ struct Order: Codable {
         uuid = try container.decode(String?.self, forKey: .uuid)
         paymentStatus = try container.decode(String?.self, forKey: .paymentStatus)
         totalCents = try container.decode(Int.self, forKey: .totalCents)
+        tipsCents = try container.decode(Int.self, forKey: .tipsCents)
     }
 }

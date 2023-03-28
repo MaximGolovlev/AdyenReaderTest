@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
         
         environmentSection.label.text = LocalStorage.environment.url
         tokenSection.label.text = LocalStorage.token
-        restaurantSection.label.text = LocalStorage.restaurant?.name
+        restaurantSection.label.text = "\(LocalStorage.restaurant?.name ?? "")\n\(LocalStorage.restaurant?.id2 ?? "")\n\(LocalStorage.restaurant?.uuid ?? "")"
         
         self.navigationItem.rightBarButtonItem?.isEnabled = Globals.isLoggedIn
     }

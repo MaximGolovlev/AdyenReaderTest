@@ -8,7 +8,6 @@
 import AdyenPOS
 import Foundation
 
-
 struct AdyenDevice {
     let serialNumber: String
     

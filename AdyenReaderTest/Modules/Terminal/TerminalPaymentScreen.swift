@@ -18,6 +18,10 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         LocalStorage.order?.uuid ?? ""
     }
     
+    var menuItems: [MenuItem] {
+        LocalStorage.menuItems
+    }
+    
     var mainContainer: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 40
@@ -105,7 +109,9 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
                 }
                 
             } catch {
-                showAlert(message: error.localizedDescription)
+                showAlert(message: error.localizedDescription, cancelHandler: { _,_ in
+                    self?.dismiss(animated: true)
+                })
             }
         }
     }

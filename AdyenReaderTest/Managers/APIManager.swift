@@ -20,6 +20,7 @@ enum APIManager {
     case payWithAdyenTerminal(orderUUID: String, POIID: String)
     
     case auth
+    case fetchMenuItems(locationName: String)
     
     var baseURL: String {
         return LocalStorage.environment.url
@@ -31,6 +32,8 @@ enum APIManager {
     
     var method: String {
         switch self {
+        case .auth:
+            return "/auth/partner/me/"
         case .refreshToken:
             return "/auth/partner/login/"
         case .refreshOrderUUID:
@@ -45,13 +48,16 @@ enum APIManager {
             return "/api/orders/\(orderUUID)/pay/adyen/check/"
         case .payWithAdyenTerminal(let orderUUID, _):
             return "/api/orders/\(orderUUID)/pay/adyen/via-terminal/"
-        case .auth:
-            return "/auth/partner/me/"
+        case .fetchMenuItems(let locationName):
+            let name = locationName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+            return "/menu/\(name)/"
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
+        case .auth:
+            return .get
         case .refreshToken:
             return .post
         case .refreshOrderUUID:
@@ -66,7 +72,7 @@ enum APIManager {
             return .post
         case .payWithAdyenTerminal:
             return .post
-        case .auth:
+        case .fetchMenuItems:
             return .get
         }
     }
@@ -74,6 +80,8 @@ enum APIManager {
     var params: [String: Any] {
         
         switch self {
+        case .auth:
+            return [:]
         case .refreshToken(let login, let password):
             return ["password": "\(password)", "username": "\(login)", "to": "REVIPAD"]
         case .refreshOrderUUID(let params):
@@ -88,13 +96,15 @@ enum APIManager {
             return [:]
         case .payWithAdyenTerminal(_, let POIID):
             return ["POIID": POIID]
-        case .auth:
+        case .fetchMenuItems:
             return [:]
         }
     }
     
     var query: [(String, String)] {
         switch self {
+        case .auth:
+            return [("expand", "businesses"), ("expand", "permissions")]
         case .refreshToken:
             return []
         case .refreshOrderUUID:
@@ -109,8 +119,9 @@ enum APIManager {
             return []
         case .payWithAdyenTerminal:
             return []
-        case .auth:
-            return [("expand", "businesses"), ("expand", "permissions")]
+        case .fetchMenuItems:
+            return [("fields[]", "menu"),
+                    ("fields[]", "items")]
         }
     }
     

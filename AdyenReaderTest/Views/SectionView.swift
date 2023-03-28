@@ -19,10 +19,12 @@ class SectionView: UIView {
         return $0
     }(UIStackView())
     
-    var label: UILabel = {
-        $0.numberOfLines = 3
+    var label: UITextView = {
+        $0.font = .systemFont(ofSize: 16)
+        $0.isScrollEnabled = false
+        $0.isEditable = false
         return $0
-    }(UILabel())
+    }(UITextView())
     
     lazy var button: UIButton = {
         $0.titleLabel?.lineBreakMode = .byWordWrapping

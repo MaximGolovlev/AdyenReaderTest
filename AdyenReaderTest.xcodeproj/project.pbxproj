@@ -52,6 +52,10 @@
 		94D6B6FA29BA4303005F5474 /* OrderRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F929BA4303005F5474 /* OrderRequestMock.swift */; };
 		94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */; };
 		94D6B70029BB6719005F5474 /* AdyenPaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */; };
+		94D8937229D2F459001C9A75 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937129D2F459001C9A75 /* Customer.swift */; };
+		94D8937429D2F6DA001C9A75 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937329D2F6DA001C9A75 /* MenuItem.swift */; };
+		94D8937629D2FAF3001C9A75 /* MenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937529D2FAF3001C9A75 /* MenuResponse.swift */; };
+		94D8937829D362C4001C9A75 /* Codable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937729D362C4001C9A75 /* Codable+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +96,10 @@
 		94D6B6F929BA4303005F5474 /* OrderRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestMock.swift; sourceTree = "<group>"; };
 		94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Ext.swift"; sourceTree = "<group>"; };
 		94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdyenPaymentResponse.swift; sourceTree = "<group>"; };
+		94D8937129D2F459001C9A75 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		94D8937329D2F6DA001C9A75 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		94D8937529D2FAF3001C9A75 /* MenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuResponse.swift; sourceTree = "<group>"; };
+		94D8937729D362C4001C9A75 /* Codable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,21 +172,40 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		941FF34929C26718001BD756 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */,
+				94D6B6EA29BA3611005F5474 /* LoginResponse.swift */,
+				941FF32C29BF6F1B001BD756 /* AuthResponse.swift */,
+				94D6B6E829BA35BA005F5474 /* OrderResponse.swift */,
+				941FF32329BF3D5C001BD756 /* VoidResponse.swift */,
+				941FF34129C0BAFC001BD756 /* TerminalPaymentResponse.swift */,
+				94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */,
+				94D8937529D2FAF3001C9A75 /* MenuResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		941FF34A29C26736001BD756 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		94814FFE28D0BDC2005A1E94 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				941FF34A29C26736001BD756 /* Request */,
+				941FF34929C26718001BD756 /* Response */,
 				94D6B6D729BA040F005F5474 /* AdyenDevice.swift */,
 				94D6B6D929BA042E005F5474 /* AdyenConnectedDevice.swift */,
-				94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */,
-				94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */,
-				94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */,
-				94D6B6E829BA35BA005F5474 /* OrderResponse.swift */,
-				94D6B6EA29BA3611005F5474 /* LoginResponse.swift */,
-				941FF32329BF3D5C001BD756 /* VoidResponse.swift */,
-				941FF32C29BF6F1B001BD756 /* AuthResponse.swift */,
 				941FF32E29BF6F83001BD756 /* Restaurnat.swift */,
-				941FF34129C0BAFC001BD756 /* TerminalPaymentResponse.swift */,
 				941FF34729C1D44C001BD756 /* Terminal.swift */,
+				94D8937129D2F459001C9A75 /* Customer.swift */,
+				94D8937329D2F6DA001C9A75 /* MenuItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +283,7 @@
 				94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */,
 				941FF33029BF74CE001BD756 /* String+Ext.swift */,
 				941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */,
+				94D8937729D362C4001C9A75 /* Codable+Ext.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -368,9 +396,12 @@
 				941FF33729C0AF0E001BD756 /* FeedViewController.swift in Sources */,
 				941FF32B29BF6B5C001BD756 /* Constants.swift in Sources */,
 				94D6B6DA29BA042E005F5474 /* AdyenConnectedDevice.swift in Sources */,
+				94D8937829D362C4001C9A75 /* Codable+Ext.swift in Sources */,
 				941FF34429C0BBC2001BD756 /* TerminalPaymentScreen.swift in Sources */,
+				94D8937229D2F459001C9A75 /* Customer.swift in Sources */,
 				941FF33329BF7571001BD756 /* Globals.swift in Sources */,
 				941FF32F29BF6F83001BD756 /* Restaurnat.swift in Sources */,
+				94D8937429D2F6DA001C9A75 /* MenuItem.swift in Sources */,
 				94D6B6ED29BA3971005F5474 /* LocalStorage.swift in Sources */,
 				94D6B6F729BA3CD2005F5474 /* UIStackView+Ext.swift in Sources */,
 				941FF32929BF57DC001BD756 /* LoginViewController.swift in Sources */,
@@ -381,6 +412,7 @@
 				941FF34029C0B225001BD756 /* TransactionProvider.swift in Sources */,
 				941FF34829C1D44C001BD756 /* Terminal.swift in Sources */,
 				94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */,
+				94D8937629D2FAF3001C9A75 /* MenuResponse.swift in Sources */,
 				94D6B6EB29BA3611005F5474 /* LoginResponse.swift in Sources */,
 				94D6B6D829BA040F005F5474 /* AdyenDevice.swift in Sources */,
 				94D6B6DE29BA045C005F5474 /* AdyenPaymentRequest.swift in Sources */,
@@ -529,7 +561,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -563,7 +595,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;

@@ -12,6 +12,7 @@ protocol TransactionProvider {
     
     var adyenManager: AdyenManager { get }
     var orderUUID: String { get }
+    var menuItems: [MenuItem] { get }
     var logsConsole: UITextView { get set }
     
     func makeReaderTransaction()
@@ -19,24 +20,90 @@ protocol TransactionProvider {
     func refreshViews()
     func handleLogs(message: String?)
     func scrollTextViewToBottom(textView: UITextView)
-    func presentOrderTypePicker(sourceView: UIView)
 }
 
 extension TransactionProvider where Self: UIViewController {
 
+    func fetchMenuItems(sourceView: UIView) {
+        
+        Task {
+            do {
+                let name = LocalStorage.restaurant?.name ?? ""
+                let response: MenuResponse = try await APIManager.fetchMenuItems(locationName: name).makeRequest()
+                let items = response.menuItems
+                DispatchQueue.main.async {
+                    self.presentMenuItemPicker(sourceView: sourceView, items: items)
+                }
+            } catch {
+                await self.showAlert(message: error.localizedDescription)
+            }
+        }
+    }
     
-    func presentOrderTypePicker(sourceView: UIView) {
+    func presentMenuItemPicker(sourceView: UIView, items: [MenuItem]) {
         
-        let alert = UIAlertController(title: "Choose Order Type", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Select Menu Item", message: nil, preferredStyle: .actionSheet)
         
-        let types = OrderRequestMock.allCases
-        
-        types.forEach({ type in
-            let action = UIAlertAction(title: type.title, style: .default, handler: { _ in
-                self.refreshOrder(request: type)
+        items.forEach({ menuItem in
+            let action = UIAlertAction(title: menuItem.description, style: .default, handler: { _ in
+                LocalStorage.orderRequestType = .regular
+                LocalStorage.menuItems = [menuItem]
+                self.refreshViews()
             })
             alert.addAction(action)
         })
+        
+        let authorised = UIAlertAction(title: OrderRequestType.authorised.title, style: .default, handler: { _ in
+            LocalStorage.orderRequestType = .authorised
+            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00")]
+            self.refreshViews()
+        })
+        alert.addAction(authorised)
+        
+        let declined = UIAlertAction(title: OrderRequestType.declined.title, style: .default, handler: { _ in
+            LocalStorage.orderRequestType = .declined
+            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
+                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
+                                      MenuItem(id: 1, quantity: 3, name: "1 cent", price: "0.01")]
+            self.refreshViews()
+        })
+        alert.addAction(declined)
+        
+        let notEnoughBalance = UIAlertAction(title: OrderRequestType.notEnoughBalance.title, style: .default, handler: { _ in
+            LocalStorage.orderRequestType = .notEnoughBalance
+            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
+                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
+                                      MenuItem(id: 1, quantity: 4, name: "1 cent", price: "0.01")]
+            self.refreshViews()
+        })
+        alert.addAction(notEnoughBalance)
+        
+        let blockedCard = UIAlertAction(title: OrderRequestType.blockedCard.title, style: .default, handler: { _ in
+            LocalStorage.orderRequestType = .blockedCard
+            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
+                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
+                                      MenuItem(id: 1, quantity: 5, name: "1 cent", price: "0.01")]
+            self.refreshViews()
+        })
+        alert.addAction(blockedCard)
+        
+        let cardExpired = UIAlertAction(title: OrderRequestType.cardExpired.title, style: .default, handler: { _ in
+            LocalStorage.orderRequestType = .cardExpired
+            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
+                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
+                                      MenuItem(id: 1, quantity: 6, name: "1 cent", price: "0.01")]
+            self.refreshViews()
+        })
+        alert.addAction(cardExpired)
+        
+        let invalidOnlinePIN = UIAlertAction(title: OrderRequestType.invalidOnlinePIN.title, style: .default, handler: { _ in
+            LocalStorage.orderRequestType = .invalidOnlinePIN
+            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
+                                      MenuItem(id: 3, quantity: 3, name: "10 cents", price: "0.10"),
+                                      MenuItem(id: 1, quantity: 4, name: "1 cent", price: "0.01")]
+            self.refreshViews()
+        })
+        alert.addAction(invalidOnlinePIN)
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
 
@@ -50,7 +117,7 @@ extension TransactionProvider where Self: UIViewController {
         
     }
     
-    private func refreshOrder(request: OrderRequestMock) {
+    func refreshOrder(request: OrderRequestMock) {
         Task {
             do {
                 let manager = APIManager.refreshOrderUUID(params: request.orderRequest)

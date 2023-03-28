@@ -12,20 +12,15 @@ class LocalStorage {
     
     static var order: Order? {
         set(order) {
-            UserDefaults.standard.set(order?.uuid, forKey: "order.UUID")
-            UserDefaults.standard.set(order?.paymentStatus, forKey: "order.paymentStatus")
-            UserDefaults.standard.set(order?.totalCents, forKey: "order.total")
+            if let encoded = try? JSONEncoder().encode(order){
+                UserDefaults.standard.set(encoded, forKey: "selectedOrder")
+            }
         }
         get {
-            
-            let paymentTotal = UserDefaults.standard.integer(forKey: "order.total")
-            
-            guard let uuid = UserDefaults.standard.string(forKey: "order.UUID"),
-                  let paymentStatus = UserDefaults.standard.string(forKey: "order.paymentStatus") else {
-                return nil
+            if let data = UserDefaults.standard.value(forKey: "selectedOrder") as? Data, let objectDecoded = try? JSONDecoder().decode(Order.self, from: data) as Order {
+                return objectDecoded
             }
-            
-            return Order(uuid: uuid, paymentStatus: paymentStatus, total: paymentTotal)
+            return nil
         }
     }
     
@@ -95,35 +90,42 @@ class LocalStorage {
     
     static var restaurant: Restaurant? {
         set(restaurant) {
-            switch environment {
-            case .allburov:
-                UserDefaults.standard.set(restaurant?.id2, forKey: "Restaurant.id.allburov")
-                UserDefaults.standard.set(restaurant?.name, forKey: "Restaurant.name.allburov")
-            case .staging:
-                UserDefaults.standard.set(restaurant?.id2, forKey: "Restaurant.id.staging")
-                UserDefaults.standard.set(restaurant?.name, forKey: "Restaurant.name.staging")
-            case .production:
-                UserDefaults.standard.set(restaurant?.id2, forKey: "Restaurant.id.production")
-                UserDefaults.standard.set(restaurant?.name, forKey: "Restaurant.name.production")
+            if let encoded = try? JSONEncoder().encode(restaurant){
+                UserDefaults.standard.set(encoded, forKey: "selectedRestaurant")
             }
         }
         get {
-            
-            switch environment {
-            case .allburov:
-                guard let id2 = UserDefaults.standard.value(forKey: "Restaurant.id.allburov") as? String,
-                      let name = UserDefaults.standard.value(forKey: "Restaurant.name.allburov") as? String else { return nil }
-                return Restaurant(name: name, id2: id2)
-            case .staging:
-                guard let id2 = UserDefaults.standard.value(forKey: "Restaurant.id.staging") as? String,
-                      let name = UserDefaults.standard.value(forKey: "Restaurant.name.staging") as? String else { return nil }
-                return Restaurant(name: name, id2: id2)
-            case .production:
-                guard let id2 = UserDefaults.standard.value(forKey: "Restaurant.id.production") as? String,
-                      let name = UserDefaults.standard.value(forKey: "Restaurant.name.production") as? String else { return nil }
-                return Restaurant(name: name, id2: id2)
+            if let data = UserDefaults.standard.value(forKey: "selectedRestaurant") as? Data, let objectDecoded = try? JSONDecoder().decode(Restaurant.self, from: data) as Restaurant {
+                return objectDecoded
             }
+            return nil
         }
     }
     
+    static var menuItems: [MenuItem] {
+        set(menuItem) {
+            if let encoded = try? JSONEncoder().encode(menuItem){
+                UserDefaults.standard.set(encoded, forKey: "menuItem_objs")
+            }
+        }
+        get {
+            if let objects = UserDefaults.standard.value(forKey: "menuItem_objs") as? Data, let objectsDecoded = try? JSONDecoder().decode(Array.self, from: objects) as [MenuItem] {
+                return objectsDecoded
+            }
+            return []
+        }
+    }
+    
+    static var orderRequestType: OrderRequestType {
+        get {
+            guard let type = UserDefaults.standard.value(forKey: "OrderRequestType") as? String,
+                  let obj = OrderRequestType(rawValue: type) else {
+                return .regular
+            }
+            return obj
+        }
+        set(type) {
+            UserDefaults.standard.set(type.rawValue, forKey: "OrderRequestType")
+        }
+    }
 }
