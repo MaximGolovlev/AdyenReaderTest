@@ -6,16 +6,15 @@
 //
 
 import UIKit
-import AdyenPOS
 
 protocol TransactionProvider {
+    
+    typealias TipsRequestHandler = ((@escaping (TipsRequest) -> ()) async throws -> ())
     
     var adyenManager: AdyenManager { get }
     var orderUUID: String { get }
     var menuItems: [MenuItem] { get }
     var logsConsole: UITextView { get set }
-    
-    func makeReaderTransaction()
     
     func refreshViews()
     func handleLogs(message: String?)
@@ -24,6 +23,12 @@ protocol TransactionProvider {
 
 extension TransactionProvider where Self: UIViewController {
 
+    var delay: UInt64 {
+        let oneSecond = TimeInterval(1_000_000_000)
+        let delay = UInt64(oneSecond * 2)
+        return delay
+    }
+    
     func fetchMenuItems(sourceView: UIView) {
         
         Task {
@@ -53,54 +58,74 @@ extension TransactionProvider where Self: UIViewController {
             alert.addAction(action)
         })
         
+        var dollar = items.first(where: { $0.name.lowercased() == "1 dollar" })!
+        var tenCents = items.first(where: { $0.name.lowercased() == "10 cents" })!
+        var oneCent = items.first(where: { $0.name.lowercased() == "1 cents" })!
+        
         let authorised = UIAlertAction(title: OrderRequestType.authorised.title, style: .default, handler: { _ in
             LocalStorage.orderRequestType = .authorised
-            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00")]
+            dollar.quantity = 1
+            LocalStorage.menuItems = [dollar]
             self.refreshViews()
         })
         alert.addAction(authorised)
         
         let declined = UIAlertAction(title: OrderRequestType.declined.title, style: .default, handler: { _ in
             LocalStorage.orderRequestType = .declined
-            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
-                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
-                                      MenuItem(id: 1, quantity: 3, name: "1 cent", price: "0.01")]
+            dollar.quantity = 1
+            tenCents.quantity = 2
+            oneCent.quantity = 3
+            LocalStorage.menuItems = [dollar,
+                                      tenCents,
+                                      oneCent]
             self.refreshViews()
         })
         alert.addAction(declined)
         
         let notEnoughBalance = UIAlertAction(title: OrderRequestType.notEnoughBalance.title, style: .default, handler: { _ in
             LocalStorage.orderRequestType = .notEnoughBalance
-            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
-                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
-                                      MenuItem(id: 1, quantity: 4, name: "1 cent", price: "0.01")]
+            dollar.quantity = 1
+            tenCents.quantity = 2
+            oneCent.quantity = 4
+            LocalStorage.menuItems = [dollar,
+                                      tenCents,
+                                      oneCent]
             self.refreshViews()
         })
         alert.addAction(notEnoughBalance)
         
         let blockedCard = UIAlertAction(title: OrderRequestType.blockedCard.title, style: .default, handler: { _ in
             LocalStorage.orderRequestType = .blockedCard
-            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
-                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
-                                      MenuItem(id: 1, quantity: 5, name: "1 cent", price: "0.01")]
+            dollar.quantity = 1
+            tenCents.quantity = 2
+            oneCent.quantity = 5
+            LocalStorage.menuItems = [dollar,
+                                      tenCents,
+                                      oneCent]
             self.refreshViews()
         })
         alert.addAction(blockedCard)
         
         let cardExpired = UIAlertAction(title: OrderRequestType.cardExpired.title, style: .default, handler: { _ in
             LocalStorage.orderRequestType = .cardExpired
-            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
-                                      MenuItem(id: 3, quantity: 2, name: "10 cents", price: "0.10"),
-                                      MenuItem(id: 1, quantity: 6, name: "1 cent", price: "0.01")]
+            dollar.quantity = 1
+            tenCents.quantity = 2
+            oneCent.quantity = 6
+            LocalStorage.menuItems = [dollar,
+                                      tenCents,
+                                      oneCent]
             self.refreshViews()
         })
         alert.addAction(cardExpired)
         
         let invalidOnlinePIN = UIAlertAction(title: OrderRequestType.invalidOnlinePIN.title, style: .default, handler: { _ in
             LocalStorage.orderRequestType = .invalidOnlinePIN
-            LocalStorage.menuItems = [MenuItem(id: 2, quantity: 1, name: "1 dollar", price: "1.00"),
-                                      MenuItem(id: 3, quantity: 3, name: "10 cents", price: "0.10"),
-                                      MenuItem(id: 1, quantity: 4, name: "1 cent", price: "0.01")]
+            dollar.quantity = 1
+            tenCents.quantity = 3
+            oneCent.quantity = 4
+            LocalStorage.menuItems = [dollar,
+                                      tenCents,
+                                      oneCent]
             self.refreshViews()
         })
         alert.addAction(invalidOnlinePIN)
@@ -145,22 +170,6 @@ extension TransactionProvider where Self: UIViewController {
                 let location = textView.text.count - 1
                 let bottom = NSMakeRange(location, 1)
                 textView.scrollRangeToVisible(bottom)
-            }
-        }
-    }
-    
-    func makeReaderTransaction() {
-        Task {
-            do {
-                let response = try await adyenManager.performTransaction(orderUUID: orderUUID, target: self)
-                handleLogs(message: Logger.response(request: "adyenManager performTransaction", data: response))
-                
-                // let object = try JSONDecoder().decode(AdyenPaymentResponse.self, from: response)
-                print(response)
-            } catch let error as AdyenPOSError {
-                await showAlert(message: error.description)
-            } catch {
-                await showAlert(message: error.localizedDescription)
             }
         }
     }
@@ -216,24 +225,31 @@ extension TransactionProvider where Self: UIViewController {
         })
     }
     
-    func makeTerminalTransaction(poid: String, completion: (() -> ())?) {
-        Task {
-            do {
-                let response: TerminalPaymentResponse = try await APIManager.payWithAdyenTerminal(orderUUID: orderUUID, POIID: poid).makeRequest(logsHandler: { self.handleLogs(message: $0) })
-                
-                if response.status == "ok" {
-                    completion?()
-                }
-                
-            } catch let error as AdyenPOSError {
-                await showAlert(message: error.description)
-            } catch {
-                await showAlert(message: error.localizedDescription)
-            }
+    func getTipRequest(sourseView: UIView, completion: ((TipsRequest) -> Void)?) {
+        DispatchQueue.main.async {
+            let tips = [TipsRequest(tipCents: 100, type: .dollars),
+                        TipsRequest(tipCents: 200, type: .dollars),
+                        TipsRequest(tipCents: 300, type: .dollars),
+                        TipsRequest(tipCents: 400, type: .dollars)]
+            self.presentTipsPicker(sourceView: sourseView, tips: tips, completion: completion)
         }
     }
     
-    func checkTransaction() {
+    func presentTipsPicker(sourceView: UIView, tips: [TipsRequest], completion: ((TipsRequest) -> Void)?) {
         
+        let alert = UIAlertController(title: "Select Tips", message: nil, preferredStyle: .actionSheet)
+        
+        tips.forEach({ tip in
+            let action = UIAlertAction(title: tip.nameString, style: .default, handler: { _ in
+                completion?(tip)
+            })
+            alert.addAction(action)
+        })
+        
+        alert.popoverPresentationController?.sourceView = sourceView
+        alert.popoverPresentationController?.sourceRect = sourceView.frame
+        
+        self.present(alert, animated: true, completion: nil)
     }
+    
 }

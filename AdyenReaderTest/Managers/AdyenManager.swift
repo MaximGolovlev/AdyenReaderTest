@@ -51,11 +51,11 @@ class AdyenManager {
         }
     }
 
-    func performTransaction(orderUUID: String, target: UIViewController) async throws -> Transaction.Response {
+    func performTransaction(orderUUID: String, target: UIViewController, postTips: Bool = false) async throws -> Transaction.Response {
         let paymentInterface = try await paymentService.getPaymentInterface(with: .cardReader)
         let presentationMode: TransactionPresentationMode = .presentingViewController(target)
         
-        let manager = APIManager.payAdyenOrderLocal(orderUUID: orderUUID, POIID: poid)
+        let manager = APIManager.payAdyenOrderLocal(orderUUID: orderUUID, POIID: poid, postTips: postTips)
         let paymentRequest: AdyenPaymentRequest = try await manager.makeRequest(logsHandler: logsHandler)
         let data = try JSONEncoder().encode(paymentRequest)
         let transaction = try Transaction.Request(data: data)

@@ -60,8 +60,6 @@ class TerminalViewController: UIViewController, TransactionProvider {
         
         configViews()
         refreshViews()
-        
-        adyenManager.logsHandler = handleLogs(message:)
     }
     
     required init?(coder: NSCoder) {
@@ -106,7 +104,7 @@ class TerminalViewController: UIViewController, TransactionProvider {
             return
         }
         
-        guard order.paymentStatus == "UNPAID" else {
+        guard order.paymentStatus == .unpaid else {
             showAlert(message: "Order has already been paid")
             return
         }
@@ -116,11 +114,10 @@ class TerminalViewController: UIViewController, TransactionProvider {
             return
         }
         
-        self.makeTerminalTransaction(poid: terminal.poiid) {
-            DispatchQueue.main.async {
-                let vc = TerminalPaymentScreen(order: order)
-                self.present(vc, animated: true)
-            }
+        DispatchQueue.main.async {
+            let vc = TerminalPaymentScreen(order: order, terminal: terminal)
+            self.present(vc, animated: true)
         }
     }
 }
+

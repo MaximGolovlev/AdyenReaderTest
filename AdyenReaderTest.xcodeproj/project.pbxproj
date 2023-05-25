@@ -23,6 +23,7 @@
 		941FF34429C0BBC2001BD756 /* TerminalPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34329C0BBC2001BD756 /* TerminalPaymentScreen.swift */; };
 		941FF34629C1CDEB001BD756 /* NSNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */; };
 		941FF34829C1D44C001BD756 /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34729C1D44C001BD756 /* Terminal.swift */; };
+		942178D429F7E95700F6AD53 /* Task+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942178D329F7E95700F6AD53 /* Task+Ext.swift */; };
 		94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FE828CF408E005A1E94 /* TerminalAPIKit */; };
 		94814FF228CF8148005A1E94 /* Adyen in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF128CF8148005A1E94 /* Adyen */; };
 		94814FF428CF8148005A1E94 /* AdyenActions in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FF328CF8148005A1E94 /* AdyenActions */; };
@@ -56,6 +57,9 @@
 		94D8937429D2F6DA001C9A75 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937329D2F6DA001C9A75 /* MenuItem.swift */; };
 		94D8937629D2FAF3001C9A75 /* MenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937529D2FAF3001C9A75 /* MenuResponse.swift */; };
 		94D8937829D362C4001C9A75 /* Codable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D8937729D362C4001C9A75 /* Codable+Ext.swift */; };
+		94E7D5692A1E3C120027CD01 /* TerminalTransactionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7D5682A1E3C120027CD01 /* TerminalTransactionProvider.swift */; };
+		94E7D56B2A1E3E210027CD01 /* TipsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7D56A2A1E3E210027CD01 /* TipsRequest.swift */; };
+		94E7D56D2A1E43250027CD01 /* ReaderTransactionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7D56C2A1E43250027CD01 /* ReaderTransactionProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +79,7 @@
 		941FF34329C0BBC2001BD756 /* TerminalPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalPaymentScreen.swift; sourceTree = "<group>"; };
 		941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNumberFormatter.swift; sourceTree = "<group>"; };
 		941FF34729C1D44C001BD756 /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
+		942178D329F7E95700F6AD53 /* Task+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+Ext.swift"; sourceTree = "<group>"; };
 		94D5858128CA0B6D00F01AE2 /* AdyenReaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdyenReaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D5858428CA0B6D00F01AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94D5858628CA0B6D00F01AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +105,9 @@
 		94D8937329D2F6DA001C9A75 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		94D8937529D2FAF3001C9A75 /* MenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuResponse.swift; sourceTree = "<group>"; };
 		94D8937729D362C4001C9A75 /* Codable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Ext.swift"; sourceTree = "<group>"; };
+		94E7D5682A1E3C120027CD01 /* TerminalTransactionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalTransactionProvider.swift; sourceTree = "<group>"; };
+		94E7D56A2A1E3E210027CD01 /* TipsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsRequest.swift; sourceTree = "<group>"; };
+		94E7D56C2A1E43250027CD01 /* ReaderTransactionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTransactionProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				941FF33F29C0B225001BD756 /* TransactionProvider.swift */,
+				94E7D56C2A1E43250027CD01 /* ReaderTransactionProvider.swift */,
+				94E7D5682A1E3C120027CD01 /* TerminalTransactionProvider.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -176,12 +186,12 @@
 			isa = PBXGroup;
 			children = (
 				94D6B6DB29BA0446005F5474 /* SessionsResponse.swift */,
+				94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */,
 				94D6B6EA29BA3611005F5474 /* LoginResponse.swift */,
 				941FF32C29BF6F1B001BD756 /* AuthResponse.swift */,
 				94D6B6E829BA35BA005F5474 /* OrderResponse.swift */,
 				941FF32329BF3D5C001BD756 /* VoidResponse.swift */,
 				941FF34129C0BAFC001BD756 /* TerminalPaymentResponse.swift */,
-				94D6B6FF29BB6719005F5474 /* AdyenPaymentResponse.swift */,
 				94D8937529D2FAF3001C9A75 /* MenuResponse.swift */,
 			);
 			path = Response;
@@ -191,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				94D6B6DD29BA045C005F5474 /* AdyenPaymentRequest.swift */,
+				94E7D56A2A1E3E210027CD01 /* TipsRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -278,6 +289,7 @@
 		94D6B6E529BA088D005F5474 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				942178D329F7E95700F6AD53 /* Task+Ext.swift */,
 				94D6B6FB29BA5B70005F5474 /* Collection+Ext.swift */,
 				94D6B6E329BA0853005F5474 /* UIViewController+Ext.swift */,
 				94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */,
@@ -396,6 +408,8 @@
 				941FF33729C0AF0E001BD756 /* FeedViewController.swift in Sources */,
 				941FF32B29BF6B5C001BD756 /* Constants.swift in Sources */,
 				94D6B6DA29BA042E005F5474 /* AdyenConnectedDevice.swift in Sources */,
+				94E7D56D2A1E43250027CD01 /* ReaderTransactionProvider.swift in Sources */,
+				942178D429F7E95700F6AD53 /* Task+Ext.swift in Sources */,
 				94D8937829D362C4001C9A75 /* Codable+Ext.swift in Sources */,
 				941FF34429C0BBC2001BD756 /* TerminalPaymentScreen.swift in Sources */,
 				94D8937229D2F459001C9A75 /* Customer.swift in Sources */,
@@ -409,8 +423,10 @@
 				941FF32429BF3D5C001BD756 /* VoidResponse.swift in Sources */,
 				941FF33129BF74CE001BD756 /* String+Ext.swift in Sources */,
 				94D6B6E429BA0853005F5474 /* UIViewController+Ext.swift in Sources */,
+				94E7D5692A1E3C120027CD01 /* TerminalTransactionProvider.swift in Sources */,
 				941FF34029C0B225001BD756 /* TransactionProvider.swift in Sources */,
 				941FF34829C1D44C001BD756 /* Terminal.swift in Sources */,
+				94E7D56B2A1E3E210027CD01 /* TipsRequest.swift in Sources */,
 				94D6B6FC29BA5B70005F5474 /* Collection+Ext.swift in Sources */,
 				94D8937629D2FAF3001C9A75 /* MenuResponse.swift in Sources */,
 				94D6B6EB29BA3611005F5474 /* LoginResponse.swift in Sources */,

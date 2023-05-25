@@ -9,7 +9,7 @@ import UIKit
 import AdyenPOS
 import SnapKit
 
-class ReaderViewController: UIViewController, TransactionProvider {
+class ReaderViewController: UIViewController, ReaderTransactionProvider {
     
     var orderUUID: String {
         LocalStorage.order?.uuid ?? ""
@@ -63,7 +63,7 @@ class ReaderViewController: UIViewController, TransactionProvider {
         configViews()
         refreshViews()
         
-        adyenManager.connectToLastKnownDevice()
+      //  adyenManager.connectToLastKnownDevice()
         adyenManager.logsHandler = handleLogs(message:)
     }
     
@@ -105,7 +105,37 @@ class ReaderViewController: UIViewController, TransactionProvider {
         adyenManager.presentDeviceManagement(target: self)
     }
     
-    @objc private func makeTransactionTapped() {
-        makeReaderTransaction()
+    @objc private func makeTransactionTapped(button: UIButton) {
+        //   makeReaderTransaction()
+        makeReaderTransactionWithPostTips(sourseView: button)
     }
+}
+
+
+extension ReaderViewController {
+    
+    func checkingPayment() {
+        
+    }
+    
+    func updatingTips() {
+        
+    }
+    
+    func capturingPayment() {
+        
+    }
+    
+    func readerTransactionSucceed(order: Order) {
+        showAlert(message: "Transaction Completed Successfully!")
+    }
+    
+    func readerTransactionCanceled() {
+        
+    }
+    
+    func readerTransactionFailed(message: String) {
+        showAlert(message: message)
+    }
+    
 }

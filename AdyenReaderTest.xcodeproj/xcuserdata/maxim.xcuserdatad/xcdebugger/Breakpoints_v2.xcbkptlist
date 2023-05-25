@@ -14,25 +14,9 @@
             filePath = "AdyenReaderTest/Managers/APIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "makeRequest(logsHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "ABFBC693-5CC7-4516-ABCD-5024CC07D395"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AdyenReaderTest/Managers/AdyenManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "performTransaction(orderUUID:target:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -46,8 +30,8 @@
             filePath = "AdyenReaderTest/Managers/APIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "makeRequest(logsHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +46,8 @@
             filePath = "AdyenReaderTest/Managers/APIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "makeRequest(logsHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +62,8 @@
             filePath = "AdyenReaderTest/Managers/APIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "makeRequest(logsHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +78,8 @@
             filePath = "AdyenReaderTest/Managers/APIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "makeRequest(logsHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +126,8 @@
             filePath = "AdyenReaderTest/Managers/APIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "makeRequest(logsHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -178,6 +162,144 @@
             endingLineNumber = "140"
             landmarkName = "presentLocationPicker(sourceView:locations:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AdyenReaderTest/Protocols/TransactionProvider.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "presentMenuItemPicker(sourceView:items:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - fc9180d7eed04ec6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "532">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - c182adae9a92b6a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (AdyenReaderTest.MenuItem) -&gt; Swift.Bool in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - 109358956c5074cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (__C.UIAlertAction) -&gt; () in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - 7729c9e2ee99aace"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #6 (__C.UIAlertAction) -&gt; () in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - 6bc47e3e60c2c0cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 (__C.UIAlertAction) -&gt; () in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - 4e52ef0be13476cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #8 (__C.UIAlertAction) -&gt; () in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - a2e89c67637daccb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #9 (__C.UIAlertAction) -&gt; () in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "2B08F8DB-2F90-41B0-9719-C38684D19A03 - 215757d9787878cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #10 (__C.UIAlertAction) -&gt; () in AdyenReaderTest.TransactionProvider&lt; where &#x3c4;_0_0: __C.UIViewController&gt;.presentMenuItemPicker(sourceView: __C.UIView, items: Swift.Array&lt;AdyenReaderTest.MenuItem&gt;) -&gt; ()"
+                  moduleName = "AdyenReaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenReaderTest/Protocols/TransactionProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

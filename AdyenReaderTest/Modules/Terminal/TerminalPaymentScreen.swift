@@ -8,7 +8,9 @@
 import UIKit
 
 
-class TerminalPaymentScreen: UIViewController, TransactionProvider {
+class TerminalPaymentScreen: UIViewController, TerminalTransactionProvider {
+    
+    var terminal: Terminal
     
     var adyenManager: AdyenManager {
         AdyenManager.shared
@@ -38,7 +40,7 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
     
     let titleLabel: UILabel = {
         $0.numberOfLines = 0
-        $0.text = "Please complete payment\nusing terminal"
+        $0.text = "Connecting to the Terminal..."
        return $0
     }(UILabel())
     
@@ -53,12 +55,15 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         return $0
     }(UITextView())
     
-    init(order: Order) {
+    init(order: Order, terminal: Terminal) {
+        self.terminal = terminal
+        
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = .systemBackground
         
         priceLabel.text = order.totalString
+        adyenManager.logsHandler = handleLogs(message:)
     }
     
     required init?(coder: NSCoder) {
@@ -71,7 +76,8 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         progressLoader.startAnimating()
         progressLoader.alpha = 0
         configViews()
-        checkPayment()
+        
+        makeTerminalTransactionWithPostTips(sourseView: titleLabel)
     }
     
     func configViews() {
@@ -86,47 +92,33 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         logsConsole.snp.makeConstraints({ $0.left.right.equalToSuperview() })
     }
     
-    func checkPayment() {
-        Task { [weak self] in
-            do {
-                let order: Order = try await APIManager.checkAdyenPayment(orderUUID: orderUUID)
-                    .makeRequest(logsHandler: { self?.handleLogs(message: $0) })
-                LocalStorage.order = order
-                if order.paymentStatus == "PAID" {
-                    self?.completeTransaction(order: order)
-                } else {
-                    self?.continueChecking()
-                }
-            } catch let status as StatusMessage {
-                
-                switch status {
-                case .InProgress:
-                    progressLoader.alpha = 1
-                    continueChecking()
-                default :
-                    progressLoader.alpha = 0
-                    showAlert(message: status.title, cancelHandler: { _,_ in self?.dismiss(animated: true) })
-                }
-                
-            } catch {
-                showAlert(message: error.localizedDescription, cancelHandler: { _,_ in
-                    self?.dismiss(animated: true)
-                })
-            }
-        }
-    }
-    
-    func continueChecking() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.checkPayment()
-        })
-    }
-    
     func refreshViews() {
         
     }
     
-    func completeTransaction(order: Order) {
+}
+
+extension TerminalPaymentScreen {
+    
+    func showProgressLoader() {
+        DispatchQueue.main.async {
+            self.progressLoader.alpha = 1
+        }
+    }
+    
+    func hideProgressLoader() {
+        DispatchQueue.main.async {
+            self.progressLoader.alpha = 0
+        }
+    }
+    
+    func terminalTransactionWasInitiated() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = "Please follow the instructions on the terminal..."
+        }
+    }
+    
+    func terminalTransactionSucceed(order: Order) {
         DispatchQueue.main.async {
             self.titleLabel.alpha = 0
             self.progressLoader.alpha = 0
@@ -136,4 +128,30 @@ class TerminalPaymentScreen: UIViewController, TransactionProvider {
         }
     }
     
+    func terminalTransactionFailed(message: String) {
+        showAlert(message: message, cancelHandler: { [weak self] _,_ in
+            self?.dismiss(animated: true)
+        })
+    }
+    
+    func checkingPayment() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = "Checking payment..."
+        }
+    }
+    
+    func updatingTips() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = "Updating tips..."
+        }
+    }
+    
+    func capturingPayment() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = "Capturing payment..."
+        }
+    }
+    
 }
+
+

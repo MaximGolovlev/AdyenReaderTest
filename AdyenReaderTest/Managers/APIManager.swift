@@ -7,20 +7,23 @@
 
 import Foundation
 
+struct VoidResult: Codable { }
+
 enum APIManager {
     
     case refreshToken(login: String, password: String)
     case refreshOrderUUID(params: [String: Any])
     
     case fetchAdyenSetupToken(setupToken: String, id2: String)
-    case payAdyenOrderLocal(orderUUID: String, POIID: String)
-    case payAdyenOrderCloud(orderUUID: String, POIID: String)
+    case payAdyenOrderLocal(orderUUID: String, POIID: String, postTips: Bool)
+    case payAdyenOrderCloud(orderUUID: String, POIID: String, postTips: Bool)
     case checkAdyenPayment(orderUUID: String)
-    
-    case payWithAdyenTerminal(orderUUID: String, POIID: String)
+    case captureAdyenPayment(orderId2: String)
     
     case auth
     case fetchMenuItems(locationName: String)
+    
+    case updateTips(orderUUID: String, request: TipsRequest)
     
     var baseURL: String {
         return LocalStorage.environment.url
@@ -40,17 +43,19 @@ enum APIManager {
             return "/api/orders/"
         case .fetchAdyenSetupToken:
             return "/api/adyen/terminals/sessions/"
-        case .payAdyenOrderLocal(let orderUUID, _):
+        case .payAdyenOrderLocal(let orderUUID, _, _):
             return "/api/orders/\(orderUUID)/pay/adyen/payment-request/"
-        case .payAdyenOrderCloud(let orderUUID, _):
+        case .payAdyenOrderCloud(let orderUUID, _, _):
             return "/api/orders/\(orderUUID)/pay/adyen/via-terminal/"
         case .checkAdyenPayment(let orderUUID):
             return "/api/orders/\(orderUUID)/pay/adyen/check/"
-        case .payWithAdyenTerminal(let orderUUID, _):
-            return "/api/orders/\(orderUUID)/pay/adyen/via-terminal/"
         case .fetchMenuItems(let locationName):
             let name = locationName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
             return "/menu/\(name)/"
+        case .updateTips(let orderUUID, _):
+            return "/api/orders/\(orderUUID)/tip/"
+        case .captureAdyenPayment(let orderId2):
+            return "/api/orders/\(orderId2)/pay/adyen/capture/"
         }
     }
     
@@ -67,13 +72,15 @@ enum APIManager {
         case .payAdyenOrderLocal:
             return .get
         case .payAdyenOrderCloud:
-            return .get
-        case .checkAdyenPayment:
             return .post
-        case .payWithAdyenTerminal:
+        case .checkAdyenPayment:
             return .post
         case .fetchMenuItems:
             return .get
+        case .updateTips:
+            return .post
+        case .captureAdyenPayment:
+            return .post
         }
     }
     
@@ -90,13 +97,19 @@ enum APIManager {
             return ["setup_token": setupToken, "business": id2]
         case .payAdyenOrderLocal:
             return [:]
-        case .payAdyenOrderCloud:
-            return [:]
+        case .payAdyenOrderCloud(_, let POIID, let postTips):
+            var params = ["POIID": POIID]
+            if postTips {
+                params["preauth"] = "True"
+            }
+            return params
         case .checkAdyenPayment:
             return [:]
-        case .payWithAdyenTerminal(_, let POIID):
-            return ["POIID": POIID]
         case .fetchMenuItems:
+            return [:]
+        case .updateTips(_, let request):
+            return request.dictionary ?? [:]
+        case .captureAdyenPayment:
             return [:]
         }
     }
@@ -111,17 +124,23 @@ enum APIManager {
             return []
         case .fetchAdyenSetupToken:
             return []
-        case .payAdyenOrderLocal(_, let POIID):
-            return [("POIID", POIID)]
-        case .payAdyenOrderCloud(_, let POIID):
-            return [("POIID", POIID)]
-        case .checkAdyenPayment:
+        case .payAdyenOrderLocal(_, let POIID, let postTips):
+            var query = [("POIID", POIID)]
+            if postTips {
+                query.append(("preauth", "True"))
+            }
+            return query
+        case .payAdyenOrderCloud:
             return []
-        case .payWithAdyenTerminal:
+        case .checkAdyenPayment:
             return []
         case .fetchMenuItems:
             return [("fields[]", "menu"),
                     ("fields[]", "items")]
+        case .updateTips:
+            return []
+        case .captureAdyenPayment:
+            return []
         }
     }
     
@@ -131,7 +150,8 @@ enum APIManager {
             return ["Content-Type": "application/json"]
         default:
             return ["Content-Type": "application/json",
-             "Authorization": "Token \(token)"]
+                    "Authorization": "Token \(token)",
+                    "User-Agent": "ZYRLPad/2023.04.81.2 iOS/16.3.1"]
         }
     }
     
@@ -233,6 +253,7 @@ enum StatusMessage: String, Error {
     case NotFound
     case Cancel
     case Busy
+    case RequiresCapture
     
     var title: String {
         switch self {
@@ -246,6 +267,8 @@ enum StatusMessage: String, Error {
             return "Canceled"
         case .Busy:
             return "Busy"
+        case .RequiresCapture:
+            return "RequiresCapture"
         }
     }
 }

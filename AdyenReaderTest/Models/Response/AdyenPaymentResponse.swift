@@ -26,7 +26,6 @@ struct SaleToPOIResponse: Codable {
         case messageHeader = "MessageHeader"
         case paymentResponse = "PaymentResponse"
     }
-    
 }
 
 struct PaymentResponse: Codable {
@@ -35,7 +34,7 @@ struct PaymentResponse: Codable {
     let saleData: SaleData
     let paymentResult: PaymentResult
     let adyenResponse: AdyenResponse
-    let paymentReceipt: [PaymentReceipt]
+    let paymentReceipt: [PaymentReceipt]?
     
     enum CodingKeys: String, CodingKey {
         case poiData = "POIData"
@@ -43,6 +42,16 @@ struct PaymentResponse: Codable {
         case paymentResult = "PaymentResult"
         case adyenResponse = "Response"
         case paymentReceipt = "PaymentReceipt"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        poiData = try container.decode(POIData.self, forKey: .poiData)
+        saleData = try container.decode(SaleData.self, forKey: .saleData)
+        paymentResult = try container.decode(PaymentResult.self, forKey: .paymentResult)
+        adyenResponse = try container.decode(AdyenResponse.self, forKey: .adyenResponse)
+        paymentReceipt = try? container.decode([PaymentReceipt].self, forKey: .paymentReceipt)
     }
 }
 
@@ -69,15 +78,24 @@ struct POITransactionID: Codable {
 struct PaymentResult: Codable {
     
     let paymentAcquirerData: PaymentAcquirerData
-    let onlineFlag: Bool
+    let onlineFlag: Bool?
     let paymentInstrumentData: PaymentInstrumentData
-    let amountsResp: AmountsResp
+    let amountsResp: AmountsResp?
     
     enum CodingKeys: String, CodingKey {
         case paymentAcquirerData = "PaymentAcquirerData"
         case onlineFlag = "OnlineFlag"
         case paymentInstrumentData = "PaymentInstrumentData"
         case amountsResp = "AmountsResp"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        paymentAcquirerData = try container.decode(PaymentAcquirerData.self, forKey: .paymentAcquirerData)
+        onlineFlag = try? container.decode(Bool.self, forKey: .onlineFlag)
+        paymentInstrumentData = try container.decode(PaymentInstrumentData.self, forKey: .paymentInstrumentData)
+        amountsResp = try? container.decode(AmountsResp.self, forKey: .amountsResp)
     }
 }
 
@@ -106,16 +124,25 @@ struct PaymentInstrumentData: Codable {
 
 struct CardData: Codable {
     
-    let maskedPan: String
-    let sensitiveCardData: SensitiveCardData
-    let entryMode: [String]
-    let paymentBrand: String
+    let maskedPan: String?
+    let sensitiveCardData: SensitiveCardData?
+    let entryMode: [String]?
+    let paymentBrand: String?
     
     enum CodingKeys: String, CodingKey {
         case maskedPan = "MaskedPan"
         case sensitiveCardData = "SensitiveCardData"
         case entryMode = "EntryMode"
         case paymentBrand = "PaymentBrand"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        maskedPan = try? container.decode(String.self, forKey: .maskedPan)
+        sensitiveCardData = try? container.decode(SensitiveCardData.self, forKey: .sensitiveCardData)
+        entryMode = try? container.decode([String].self, forKey: .entryMode)
+        paymentBrand = try? container.decode(String.self, forKey: .paymentBrand)
     }
 }
 
@@ -130,8 +157,8 @@ struct SensitiveCardData: Codable {
 
 struct PaymentAcquirerData: Codable {
     
-    let approvalCode: String
-    let acquirerTransactionID: AcquirerTransactionID
+    let approvalCode: String?
+    let acquirerTransactionID: AcquirerTransactionID?
     let acquirerPOIID: String
     let merchantID: String
     
@@ -142,6 +169,14 @@ struct PaymentAcquirerData: Codable {
         case merchantID = "MerchantID"
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        approvalCode = try? container.decode(String.self, forKey: .approvalCode)
+        acquirerTransactionID = try? container.decode(AcquirerTransactionID.self, forKey: .acquirerTransactionID)
+        acquirerPOIID = try container.decode(String.self, forKey: .acquirerPOIID)
+        merchantID = try container.decode(String.self, forKey: .merchantID)
+    }
 }
 
 struct AcquirerTransactionID: Codable {
