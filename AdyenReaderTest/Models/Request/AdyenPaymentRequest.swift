@@ -63,9 +63,11 @@ struct PaymentRequest: Codable {
 
 struct SaleData: Codable {
     let saleTransactionID: SaleTransactionID
+    let saleToAcquirerData: String?
     
     enum CodingKeys: String, CodingKey {
         case saleTransactionID = "SaleTransactionID"
+        case saleToAcquirerData = "SaleToAcquirerData"
     }
 }
 
@@ -91,7 +93,7 @@ struct PaymentTransaction: Codable {
 struct AmountsReq: Codable {
     
     let currency: String
-    let requestedAmount: Float
+    let requestedAmount: Decimal
     
     enum CodingKeys: String, CodingKey {
         case currency = "Currency"

@@ -219,6 +219,60 @@ enum APIManager {
             throw NetworkAuthError.invalidResponse
         }
     }
+    
+    func getData(logsHandler: ((String?) -> ())? = nil) async throws -> Data {
+        
+        let urlPath = baseURL + method
+        var urlComponents = URLComponents(string: urlPath)
+        urlComponents?.queryItems = query.compactMap({ URLQueryItem(name: $0.0, value: $0.1) })
+        
+        guard let url = urlComponents?.url else {
+            throw NetworkAuthError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod.rawValue
+        
+        headers.forEach({
+            request.addValue($0.value, forHTTPHeaderField: $0.key)
+        })
+        
+        if httpMethod == .post {
+            let jsonData = try? JSONSerialization.data(withJSONObject: params)
+            request.httpBody = jsonData
+        }
+        
+        let requestLog = Logger.request(request: url.absoluteString, headers: headers, params: params)
+        logsHandler?(requestLog)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        let responseLog = Logger.response(request: url.absoluteString, data: data)
+        logsHandler?(responseLog)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode - 200 < 99 {
+                
+                return data
+                
+            } else {
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                
+                if let string = json?["status"] as? String, let status = StatusMessage(rawValue: string) {
+                    throw status
+                }
+                
+                if let detail = json?["detail"] as? String {
+                    throw NetworkAuthError.customError(detail)
+                } else {
+                    let message = json.map({ "\($0)" }) ?? "Empty"
+                    throw NetworkAuthError.customError(message)
+                }
+            }
+        } else {
+            throw NetworkAuthError.invalidResponse
+        }
+    }
 }
 
 enum NetworkAuthError: Error, LocalizedError {

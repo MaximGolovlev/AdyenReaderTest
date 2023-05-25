@@ -56,9 +56,8 @@ class AdyenManager {
         let presentationMode: TransactionPresentationMode = .presentingViewController(target)
         
         let manager = APIManager.payAdyenOrderLocal(orderUUID: orderUUID, POIID: poid, postTips: postTips)
-        let paymentRequest: AdyenPaymentRequest = try await manager.makeRequest(logsHandler: logsHandler)
-        let data = try JSONEncoder().encode(paymentRequest)
-        let transaction = try Transaction.Request(data: data)
+        let paymentRequestData = try await manager.getData(logsHandler: logsHandler)
+        let transaction = try Transaction.Request(data: paymentRequestData)
         
         return await paymentService.performTransaction(with: transaction, paymentInterface: paymentInterface, presentationMode: presentationMode)
     }
