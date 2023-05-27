@@ -58,9 +58,9 @@ extension AdyenManager {
         // Some payment methods have additional required or optional configuration.
         // For example, an optional configuration to show the cardholder name field for cards.
         dropInConfiguration.card.showsHolderNameField = true
-        dropInConfiguration.actionComponent.threeDS.delegateAuthentication = ConfigurationConstants.delegatedAuthenticationConfigurations
-        dropInConfiguration.actionComponent.threeDS.requestorAppURL = URL(string: ConfigurationConstants.returnUrl)
-        dropInConfiguration.card.billingAddress.mode = .postalCode
+//        dropInConfiguration.actionComponent.threeDS.delegateAuthentication = ConfigurationConstants.delegatedAuthenticationConfigurations
+//        dropInConfiguration.actionComponent.threeDS.requestorAppURL = URL(string: ConfigurationConstants.returnUrl)
+//        dropInConfiguration.card.billingAddress.mode = .postalCode
         
         let dropInComponent = DropInComponent(paymentMethods: session.sessionContext.paymentMethods,
                                               context: adyenContext,
