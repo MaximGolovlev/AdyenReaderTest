@@ -37,6 +37,12 @@ class FeedViewController: UIViewController {
         return $0
     }(UIButton(type: .system))
     
+    lazy var dropInButton: UIButton = {
+        $0.setTitle("Test Drop In", for: .normal)
+        $0.addTarget(self, action: #selector(testDropIn), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -67,7 +73,7 @@ class FeedViewController: UIViewController {
             $0.left.right.equalToSuperview().inset(20)
         })
         
-        mainContainer.addArrangedSubviews([loginButton, terminalTransactionButton, transactionButton])
+        mainContainer.addArrangedSubviews([loginButton, terminalTransactionButton, transactionButton, dropInButton])
     }
     
     func refreshViews() {
@@ -87,6 +93,13 @@ class FeedViewController: UIViewController {
 
         let vc = TerminalViewController()
         present(vc, animated: true)
+    }
+    
+    @objc private func testDropIn() {
+        
+        let vc = DropInViewController()
+        present(vc, animated: true)
+        
     }
     
     @objc func loginButtonTapped() {

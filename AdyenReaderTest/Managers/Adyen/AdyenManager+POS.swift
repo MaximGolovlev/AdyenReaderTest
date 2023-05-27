@@ -1,56 +1,15 @@
 //
-//  AdyenManager.swift
+//  AdyenManager+Reader.swift
 //  AdyenReaderTest
 //
-//  Created by Maxim on 09.03.2023.
+//  Created by Maxim on 26.05.2023.
 //
 
-import AdyenPOS
 import UIKit
+import AdyenPOS
 
-protocol AdyenManagerDeviceDelegate: AnyObject {
-    func onDeviceDiscovered(device: AdyenDevice)
-    func onDeviceDiscoveryFailed(with error: Error)
-    func onDeviceConnected(device: AdyenConnectedDevice)
-    func onDeviceConnectionFail(with error: Error)
-    func onDeviceDisconnected()
-}
-
-class AdyenManager {
+extension AdyenManager {
     
-    var logsHandler: ((String?) -> ())?
-    
-    static let shared = AdyenManager()
-    
-    private var paymentService: PaymentService!
-    
-    private var poid: String {
-        (try? paymentService.installationId) ?? ""
-    }
-    
-    weak var deviceDelegate: AdyenManagerDeviceDelegate?
-    
-    private var sessionResponse: SessionsResponse?
-    
-    var connectedDevice: AdyenConnectedDevice?
-    
-    private init() {
-        paymentService = PaymentService(delegate: self)
-        paymentService.deviceManager.delegate = self
-    }
-    
-    func presentDeviceManagement(target: UIViewController) {
-        let vc = DeviceManagementViewController(paymentService: paymentService)
-        target.present(vc, animated: true)
-    }
-    
-    func connectToLastKnownDevice() {
-        let manager = paymentService.deviceManager
-        if let last = manager.knownDevices.last {
-            manager.connect(to: last)
-        }
-    }
-
     func performTransaction(orderUUID: String, target: UIViewController, postTips: Bool = false) async throws -> Transaction.Response {
         let paymentInterface = try await paymentService.getPaymentInterface(with: .cardReader)
         let presentationMode: TransactionPresentationMode = .presentingViewController(target)
@@ -61,18 +20,7 @@ class AdyenManager {
         
         return await paymentService.performTransaction(with: transaction, paymentInterface: paymentInterface, presentationMode: presentationMode)
     }
-}
-
-extension AdyenManager: PaymentServiceDelegate {
     
-    func register(with setupToken: String) async throws -> String {
-        
-        let manager = APIManager.fetchAdyenSetupToken(setupToken: setupToken, id2: LocalStorage.restaurant?.id2 ?? "")
-        let sessionResponse: SessionsResponse = try await manager.makeRequest(logsHandler: logsHandler)
-        self.sessionResponse = sessionResponse
-        return sessionResponse.sdkData
-    }
-
 }
 
 extension AdyenManager: DeviceManagerDelegate {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SessionsResponse: Codable {
+struct POSSessionsResponse: Codable {
     let id: String
     let installationId: String
     let merchantAccount: String

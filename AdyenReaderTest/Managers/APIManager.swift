@@ -13,16 +13,16 @@ enum APIManager {
     
     case refreshToken(login: String, password: String)
     case refreshOrderUUID(params: [String: Any])
-    
     case fetchAdyenSetupToken(setupToken: String, id2: String)
-    case payAdyenOrderLocal(orderUUID: String, POIID: String, postTips: Bool)
-    case payAdyenOrderCloud(orderUUID: String, POIID: String, postTips: Bool)
-    case checkAdyenPayment(orderUUID: String)
-    case captureAdyenPayment(orderId2: String)
+    case fetchAdyenSession(orderId2: String)
     
     case auth
     case fetchMenuItems(locationName: String)
     
+    case payAdyenOrderLocal(orderUUID: String, POIID: String, postTips: Bool)
+    case payAdyenOrderCloud(orderUUID: String, POIID: String, postTips: Bool)
+    case checkAdyenPayment(orderUUID: String)
+    case captureAdyenPayment(orderId2: String)
     case updateTips(orderUUID: String, request: TipsRequest)
     
     var baseURL: String {
@@ -43,6 +43,8 @@ enum APIManager {
             return "/api/orders/"
         case .fetchAdyenSetupToken:
             return "/api/adyen/terminals/sessions/"
+        case .fetchAdyenSession(let orderId2):
+            return "/api/orders/\(orderId2)/pay/adyen/online/session/"
         case .payAdyenOrderLocal(let orderUUID, _, _):
             return "/api/orders/\(orderUUID)/pay/adyen/payment-request/"
         case .payAdyenOrderCloud(let orderUUID, _, _):
@@ -68,6 +70,8 @@ enum APIManager {
         case .refreshOrderUUID:
             return .post
         case .fetchAdyenSetupToken:
+            return .post
+        case .fetchAdyenSession:
             return .post
         case .payAdyenOrderLocal:
             return .get
@@ -95,6 +99,8 @@ enum APIManager {
             return params
         case .fetchAdyenSetupToken(let setupToken, let id2):
             return ["setup_token": setupToken, "business": id2]
+        case .fetchAdyenSession:
+            return [:]
         case .payAdyenOrderLocal:
             return [:]
         case .payAdyenOrderCloud(_, let POIID, let postTips):
@@ -123,6 +129,8 @@ enum APIManager {
         case .refreshOrderUUID:
             return []
         case .fetchAdyenSetupToken:
+            return []
+        case .fetchAdyenSession:
             return []
         case .payAdyenOrderLocal(_, let POIID, let postTips):
             var query = [("POIID", POIID)]
