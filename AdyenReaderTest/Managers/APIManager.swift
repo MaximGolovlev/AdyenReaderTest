@@ -23,6 +23,7 @@ enum APIManager {
     case payAdyenOrderCloud(orderUUID: String, POIID: String, postTips: Bool)
     case checkAdyenPayment(orderUUID: String)
     case captureAdyenPayment(orderId2: String)
+    case adyenPaymentResponse(orderId2: String, body: Data)
     case updateTips(orderUUID: String, request: TipsRequest)
     
     var baseURL: String {
@@ -58,6 +59,8 @@ enum APIManager {
             return "/api/orders/\(orderUUID)/tip/"
         case .captureAdyenPayment(let orderId2):
             return "/api/orders/\(orderId2)/pay/adyen/capture/"
+        case .adyenPaymentResponse(let orderId2, _):
+            return "/api/orders/\(orderId2)/pay/adyen/payment-response/"
         }
     }
     
@@ -84,6 +87,8 @@ enum APIManager {
         case .updateTips:
             return .post
         case .captureAdyenPayment:
+            return .post
+        case .adyenPaymentResponse:
             return .post
         }
     }
@@ -117,6 +122,17 @@ enum APIManager {
             return request.dictionary ?? [:]
         case .captureAdyenPayment:
             return [:]
+        case .adyenPaymentResponse:
+            return [:]
+        }
+    }
+    
+    var body: Data? {
+        switch self {
+        case .adyenPaymentResponse(_, let body):
+            return body
+        default:
+            return nil
         }
     }
     
@@ -149,6 +165,8 @@ enum APIManager {
             return []
         case .captureAdyenPayment:
             return []
+        case .adyenPaymentResponse:
+            return []
         }
     }
     
@@ -159,7 +177,7 @@ enum APIManager {
         default:
             return ["Content-Type": "application/json",
                     "Authorization": "Token \(token)",
-                    "User-Agent": "ZYRLPad/2023.04.81.2 iOS/16.3.1"]
+                    "User-Agent": "ZYRLPad/2023.06.89.4 iOS/16.3.1"]
         }
     }
     
@@ -181,7 +199,7 @@ enum APIManager {
         })
         
         if httpMethod == .post {
-            let jsonData = try? JSONSerialization.data(withJSONObject: params)
+            let jsonData = body ?? (try? JSONSerialization.data(withJSONObject: params))
             request.httpBody = jsonData
         }
         
@@ -195,6 +213,8 @@ enum APIManager {
         
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode - 200 < 99 {
+                
+                print(httpResponse.statusCode)
                 
                 var sourceData = data
                 
@@ -246,7 +266,7 @@ enum APIManager {
         })
         
         if httpMethod == .post {
-            let jsonData = try? JSONSerialization.data(withJSONObject: params)
+            let jsonData = body ?? (try? JSONSerialization.data(withJSONObject: params))
             request.httpBody = jsonData
         }
         

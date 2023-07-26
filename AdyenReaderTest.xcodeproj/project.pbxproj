@@ -24,6 +24,8 @@
 		941FF34629C1CDEB001BD756 /* NSNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34529C1CDEA001BD756 /* NSNumberFormatter.swift */; };
 		941FF34829C1D44C001BD756 /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FF34729C1D44C001BD756 /* Terminal.swift */; };
 		942178D429F7E95700F6AD53 /* Task+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942178D329F7E95700F6AD53 /* Task+Ext.swift */; };
+		945943772A5C84950017EB8C /* ADYPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 945943762A5C84950017EB8C /* ADYPOS */; };
+		945943792A5C84950017EB8C /* AdyenPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 945943782A5C84950017EB8C /* AdyenPOS */; };
 		94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94814FE828CF408E005A1E94 /* TerminalAPIKit */; };
 		94D5858528CA0B6D00F01AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5858428CA0B6D00F01AE2 /* AppDelegate.swift */; };
 		94D5858728CA0B6D00F01AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5858628CA0B6D00F01AE2 /* SceneDelegate.swift */; };
@@ -40,8 +42,6 @@
 		94D6B6E929BA35BA005F5474 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6E829BA35BA005F5474 /* OrderResponse.swift */; };
 		94D6B6EB29BA3611005F5474 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6EA29BA3611005F5474 /* LoginResponse.swift */; };
 		94D6B6ED29BA3971005F5474 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6EC29BA3971005F5474 /* LocalStorage.swift */; };
-		94D6B6F029BA3C1E005F5474 /* ADYPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94D6B6EF29BA3C1E005F5474 /* ADYPOS */; };
-		94D6B6F229BA3C1E005F5474 /* AdyenPOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94D6B6F129BA3C1E005F5474 /* AdyenPOS */; };
 		94D6B6F529BA3C74005F5474 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94D6B6F429BA3C74005F5474 /* SnapKit */; };
 		94D6B6F729BA3CD2005F5474 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F629BA3CD2005F5474 /* UIStackView+Ext.swift */; };
 		94D6B6FA29BA4303005F5474 /* OrderRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B6F929BA4303005F5474 /* OrderRequestMock.swift */; };
@@ -123,10 +123,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D6B6F029BA3C1E005F5474 /* ADYPOS in Frameworks */,
-				94D6B6F229BA3C1E005F5474 /* AdyenPOS in Frameworks */,
 				94E7D57D2A20EE4A0027CD01 /* AdyenDropIn in Frameworks */,
+				945943792A5C84950017EB8C /* AdyenPOS in Frameworks */,
 				94E7D57F2A20EE4A0027CD01 /* AdyenSession in Frameworks */,
+				945943772A5C84950017EB8C /* ADYPOS in Frameworks */,
 				94814FE928CF408E005A1E94 /* TerminalAPIKit in Frameworks */,
 				94E7D5752A20EE4A0027CD01 /* Adyen in Frameworks */,
 				94E7D5792A20EE4A0027CD01 /* AdyenCard in Frameworks */,
@@ -356,8 +356,6 @@
 			name = AdyenReaderTest;
 			packageProductDependencies = (
 				94814FE828CF408E005A1E94 /* TerminalAPIKit */,
-				94D6B6EF29BA3C1E005F5474 /* ADYPOS */,
-				94D6B6F129BA3C1E005F5474 /* AdyenPOS */,
 				94D6B6F429BA3C74005F5474 /* SnapKit */,
 				94E7D5742A20EE4A0027CD01 /* Adyen */,
 				94E7D5762A20EE4A0027CD01 /* AdyenActions */,
@@ -365,6 +363,8 @@
 				94E7D57A2A20EE4A0027CD01 /* AdyenComponents */,
 				94E7D57C2A20EE4A0027CD01 /* AdyenDropIn */,
 				94E7D57E2A20EE4A0027CD01 /* AdyenSession */,
+				945943762A5C84950017EB8C /* ADYPOS */,
+				945943782A5C84950017EB8C /* AdyenPOS */,
 			);
 			productName = AdyenReaderTest;
 			productReference = 94D5858128CA0B6D00F01AE2 /* AdyenReaderTest.app */;
@@ -396,9 +396,9 @@
 			mainGroup = 94D5857828CA0B6D00F01AE2;
 			packageReferences = (
 				94814FE728CF408E005A1E94 /* XCRemoteSwiftPackageReference "adyen-terminal-api-ios" */,
-				94D6B6EE29BA3C1E005F5474 /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */,
 				94D6B6F329BA3C74005F5474 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				94E7D5732A20EE4A0027CD01 /* XCRemoteSwiftPackageReference "adyen-ios" */,
+				945943752A5C84950017EB8C /* XCRemoteSwiftPackageReference "adyen-pos-mobile-ios" */,
 			);
 			productRefGroup = 94D5858228CA0B6D00F01AE2 /* Products */;
 			projectDirPath = "";
@@ -609,7 +609,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -621,7 +621,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -643,7 +643,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = PGU2Q9LCKF;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -655,7 +655,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -694,20 +694,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		945943752A5C84950017EB8C /* XCRemoteSwiftPackageReference "adyen-pos-mobile-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Adyen/adyen-pos-mobile-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		94814FE728CF408E005A1E94 /* XCRemoteSwiftPackageReference "adyen-terminal-api-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Adyen/adyen-terminal-api-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
-			};
-		};
-		94D6B6EE29BA3C1E005F5474 /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "file:///Users/maxim/Documents/AdyenReaderTest/AdyenPOS_1.0.4";
-			requirement = {
-				branch = main;
-				kind = branch;
 			};
 		};
 		94D6B6F329BA3C74005F5474 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -729,20 +729,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		945943762A5C84950017EB8C /* ADYPOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 945943752A5C84950017EB8C /* XCRemoteSwiftPackageReference "adyen-pos-mobile-ios" */;
+			productName = ADYPOS;
+		};
+		945943782A5C84950017EB8C /* AdyenPOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 945943752A5C84950017EB8C /* XCRemoteSwiftPackageReference "adyen-pos-mobile-ios" */;
+			productName = AdyenPOS;
+		};
 		94814FE828CF408E005A1E94 /* TerminalAPIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94814FE728CF408E005A1E94 /* XCRemoteSwiftPackageReference "adyen-terminal-api-ios" */;
 			productName = TerminalAPIKit;
-		};
-		94D6B6EF29BA3C1E005F5474 /* ADYPOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 94D6B6EE29BA3C1E005F5474 /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */;
-			productName = ADYPOS;
-		};
-		94D6B6F129BA3C1E005F5474 /* AdyenPOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 94D6B6EE29BA3C1E005F5474 /* XCRemoteSwiftPackageReference "AdyenPOS_1.0" */;
-			productName = AdyenPOS;
 		};
 		94D6B6F429BA3C74005F5474 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

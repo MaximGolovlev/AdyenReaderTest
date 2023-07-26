@@ -63,6 +63,10 @@ extension ReaderTransactionProvider where Self: UIViewController {
                 
                 try await Task<Never, Never>.sleep(nanoseconds: self.delay)
                 
+                let _ = try await APIManager.adyenPaymentResponse(orderId2: orderUUID, body: response)
+                    .getData(logsHandler: { self.handleLogs(message: $0) })
+                
+                
                 checkPayment(count: 30, requiresCapture: {
                     
                     self.getTipRequest(sourseView: sourseView) { tips in
@@ -139,15 +143,15 @@ extension ReaderTransactionProvider where Self: UIViewController {
     private func capturePayment(id2: String, count: Int, completion: (() -> Void)?) {
         Task { [weak self] in
             do {
-                let void: VoidResult = try await APIManager.captureAdyenPayment(orderId2: id2)
+                let _: VoidResult = try await APIManager.captureAdyenPayment(orderId2: id2)
                     .makeRequest(logsHandler: { self?.handleLogs(message: $0) })
                  completion?()
             } catch {
                 print(error.localizedDescription)
                 if error.localizedDescription.lowercased().contains("authorized amount is different") {
-                    continueCapturing(id2: id2, count: count, completion: completion)
+                    self?.continueCapturing(id2: id2, count: count, completion: completion)
                 } else {
-                    readerTransactionFailed(message: error.localizedDescription)
+                    self?.readerTransactionFailed(message: error.localizedDescription)
                 }
             }
         }

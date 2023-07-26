@@ -51,6 +51,9 @@ extension TerminalTransactionProvider where Self: UIViewController {
     
     private func checkTerminalPayment() {
         Task { [weak self] in
+            
+            guard let orderUUID = self?.orderUUID else { return }
+            
             do {
                 let order: Order = try await APIManager.checkAdyenPayment(orderUUID: orderUUID)
                     .makeRequest(logsHandler: { self?.handleLogs(message: $0) })
@@ -63,15 +66,15 @@ extension TerminalTransactionProvider where Self: UIViewController {
                 
                 switch status {
                 case .InProgress:
-                    showProgressLoader()
-                    continueChecking()
+                    self?.showProgressLoader()
+                    self?.continueChecking()
                 default :
-                    hideProgressLoader()
-                    terminalTransactionFailed(message: status.title)
+                    self?.hideProgressLoader()
+                    self?.terminalTransactionFailed(message: status.title)
                 }
                 
             } catch {
-                terminalTransactionFailed(message: error.localizedDescription)
+                self?.terminalTransactionFailed(message: error.localizedDescription)
             }
         }
     }
@@ -188,15 +191,15 @@ extension TerminalTransactionProvider where Self: UIViewController {
     private func capturePayment(id2: String, count: Int, completion: (() -> Void)?) {
         Task { [weak self] in
             do {
-                let void: VoidResult = try await APIManager.captureAdyenPayment(orderId2: id2)
+                let _: VoidResult = try await APIManager.captureAdyenPayment(orderId2: id2)
                     .makeRequest(logsHandler: { self?.handleLogs(message: $0) })
                  completion?()
             } catch {
                 print(error.localizedDescription)
                 if error.localizedDescription.lowercased().contains("authorized amount is different") {
-                    continueCapturing(id2: id2, count: count, completion: completion)
+                    self?.continueCapturing(id2: id2, count: count, completion: completion)
                 } else {
-                    terminalTransactionFailed(message: error.localizedDescription)
+                    self?.terminalTransactionFailed(message: error.localizedDescription)
                 }
             }
         }

@@ -47,98 +47,108 @@ extension TransactionProvider where Self: UIViewController {
     
     func presentMenuItemPicker(sourceView: UIView, items: [MenuItem]) {
         
-        let alert = UIAlertController(title: "Select Menu Item", message: nil, preferredStyle: .actionSheet)
+     //   let alert = UIAlertController(title: "Select Menu Item", message: nil, preferredStyle: .actionSheet)
         
-        items.forEach({ menuItem in
-            let action = UIAlertAction(title: menuItem.description, style: .default, handler: { _ in
-                LocalStorage.orderRequestType = .regular
-                LocalStorage.menuItems = [menuItem]
-                self.refreshViews()
-            })
-            alert.addAction(action)
-        })
+//        items.forEach({ menuItem in
+//            let action = UIAlertAction(title: menuItem.description, style: .default, handler: { _ in
+//                LocalStorage.orderRequestType = .regular
+//                LocalStorage.menuItems = [menuItem]
+//                self.refreshViews()
+//            })
+//            alert.addAction(action)
+//        })
+//
+//        var dollar = items.first(where: { $0.name.lowercased() == "1 dollar" })!
+//        var tenCents = items.first(where: { $0.name.lowercased() == "10 cents" })!
+//        var oneCent = items.first(where: { $0.name.lowercased() == "1 cents" })!
+//
+//        let authorised = UIAlertAction(title: OrderRequestType.authorised.title, style: .default, handler: { _ in
+//            LocalStorage.orderRequestType = .authorised
+//            dollar.quantity = 1
+//            LocalStorage.menuItems = [dollar]
+//            self.refreshViews()
+//        })
+//        alert.addAction(authorised)
+//
+//        let declined = UIAlertAction(title: OrderRequestType.declined.title, style: .default, handler: { _ in
+//            LocalStorage.orderRequestType = .declined
+//            dollar.quantity = 1
+//            tenCents.quantity = 2
+//            oneCent.quantity = 3
+//            LocalStorage.menuItems = [dollar,
+//                                      tenCents,
+//                                      oneCent]
+//            self.refreshViews()
+//        })
+//        alert.addAction(declined)
+//
+//        let notEnoughBalance = UIAlertAction(title: OrderRequestType.notEnoughBalance.title, style: .default, handler: { _ in
+//            LocalStorage.orderRequestType = .notEnoughBalance
+//            dollar.quantity = 1
+//            tenCents.quantity = 2
+//            oneCent.quantity = 4
+//            LocalStorage.menuItems = [dollar,
+//                                      tenCents,
+//                                      oneCent]
+//            self.refreshViews()
+//        })
+//        alert.addAction(notEnoughBalance)
+//
+//        let blockedCard = UIAlertAction(title: OrderRequestType.blockedCard.title, style: .default, handler: { _ in
+//            LocalStorage.orderRequestType = .blockedCard
+//            dollar.quantity = 1
+//            tenCents.quantity = 2
+//            oneCent.quantity = 5
+//            LocalStorage.menuItems = [dollar,
+//                                      tenCents,
+//                                      oneCent]
+//            self.refreshViews()
+//        })
+//        alert.addAction(blockedCard)
+//
+//        let cardExpired = UIAlertAction(title: OrderRequestType.cardExpired.title, style: .default, handler: { _ in
+//            LocalStorage.orderRequestType = .cardExpired
+//            dollar.quantity = 1
+//            tenCents.quantity = 2
+//            oneCent.quantity = 6
+//            LocalStorage.menuItems = [dollar,
+//                                      tenCents,
+//                                      oneCent]
+//            self.refreshViews()
+//        })
+//        alert.addAction(cardExpired)
+//
+//        let invalidOnlinePIN = UIAlertAction(title: OrderRequestType.invalidOnlinePIN.title, style: .default, handler: { _ in
+//            LocalStorage.orderRequestType = .invalidOnlinePIN
+//            dollar.quantity = 1
+//            tenCents.quantity = 3
+//            oneCent.quantity = 4
+//            LocalStorage.menuItems = [dollar,
+//                                      tenCents,
+//                                      oneCent]
+//            self.refreshViews()
+//        })
+//        alert.addAction(invalidOnlinePIN)
+//
+//        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+//
+//        })
+//        alert.addAction(cancel)
+//
+//        alert.popoverPresentationController?.sourceView = sourceView
+//        alert.popoverPresentationController?.sourceRect = sourceView.frame
+//
         
-        var dollar = items.first(where: { $0.name.lowercased() == "1 dollar" })!
-        var tenCents = items.first(where: { $0.name.lowercased() == "10 cents" })!
-        var oneCent = items.first(where: { $0.name.lowercased() == "1 cents" })!
-        
-        let authorised = UIAlertAction(title: OrderRequestType.authorised.title, style: .default, handler: { _ in
-            LocalStorage.orderRequestType = .authorised
-            dollar.quantity = 1
-            LocalStorage.menuItems = [dollar]
+        let vc = MenuItemPickerView(items: items)
+        vc.didSelectMenuItem = { (item, vc) in
+            LocalStorage.menuItems = [item]
+            vc.dismiss(animated: true)
             self.refreshViews()
-        })
-        alert.addAction(authorised)
+        }
         
-        let declined = UIAlertAction(title: OrderRequestType.declined.title, style: .default, handler: { _ in
-            LocalStorage.orderRequestType = .declined
-            dollar.quantity = 1
-            tenCents.quantity = 2
-            oneCent.quantity = 3
-            LocalStorage.menuItems = [dollar,
-                                      tenCents,
-                                      oneCent]
-            self.refreshViews()
-        })
-        alert.addAction(declined)
+        let nav = UINavigationController(rootViewController: vc)
         
-        let notEnoughBalance = UIAlertAction(title: OrderRequestType.notEnoughBalance.title, style: .default, handler: { _ in
-            LocalStorage.orderRequestType = .notEnoughBalance
-            dollar.quantity = 1
-            tenCents.quantity = 2
-            oneCent.quantity = 4
-            LocalStorage.menuItems = [dollar,
-                                      tenCents,
-                                      oneCent]
-            self.refreshViews()
-        })
-        alert.addAction(notEnoughBalance)
-        
-        let blockedCard = UIAlertAction(title: OrderRequestType.blockedCard.title, style: .default, handler: { _ in
-            LocalStorage.orderRequestType = .blockedCard
-            dollar.quantity = 1
-            tenCents.quantity = 2
-            oneCent.quantity = 5
-            LocalStorage.menuItems = [dollar,
-                                      tenCents,
-                                      oneCent]
-            self.refreshViews()
-        })
-        alert.addAction(blockedCard)
-        
-        let cardExpired = UIAlertAction(title: OrderRequestType.cardExpired.title, style: .default, handler: { _ in
-            LocalStorage.orderRequestType = .cardExpired
-            dollar.quantity = 1
-            tenCents.quantity = 2
-            oneCent.quantity = 6
-            LocalStorage.menuItems = [dollar,
-                                      tenCents,
-                                      oneCent]
-            self.refreshViews()
-        })
-        alert.addAction(cardExpired)
-        
-        let invalidOnlinePIN = UIAlertAction(title: OrderRequestType.invalidOnlinePIN.title, style: .default, handler: { _ in
-            LocalStorage.orderRequestType = .invalidOnlinePIN
-            dollar.quantity = 1
-            tenCents.quantity = 3
-            oneCent.quantity = 4
-            LocalStorage.menuItems = [dollar,
-                                      tenCents,
-                                      oneCent]
-            self.refreshViews()
-        })
-        alert.addAction(invalidOnlinePIN)
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-
-        })
-        alert.addAction(cancel)
-        
-        alert.popoverPresentationController?.sourceView = sourceView
-        alert.popoverPresentationController?.sourceRect = sourceView.frame
-        
-        self.present(alert, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
         
     }
     
@@ -250,6 +260,129 @@ extension TransactionProvider where Self: UIViewController {
         alert.popoverPresentationController?.sourceRect = sourceView.frame
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+}
+
+class MenuItemPickerView: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var didSelectMenuItem: ((MenuItem, MenuItemPickerView) -> ())?
+    
+    lazy var tableView: UITableView = {
+        $0.register(MenuItemPickerCell.self, forCellReuseIdentifier: "cellId")
+        $0.dataSource = self
+        $0.delegate = self
+        return $0
+    }(UITableView())
+    
+    var items = [MenuItem]()
+    
+    init(items: [MenuItem]) {
+        self.items = items
+        super.init(nibName: nil, bundle: nil)
+        
+        title = "Menu Item Picker"
+        
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints({ $0.edges.equalToSuperview() })
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId") as! MenuItemPickerCell
+        
+        cell.titleLabel.text = items[indexPath.row].description
+        
+        cell.minusHandler = { quantity in
+            self.items[indexPath.row].quantity = quantity
+        }
+        
+        cell.plusHandler = { quantity in
+            self.items[indexPath.row].quantity = quantity
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        didSelectMenuItem?(items[indexPath.row], self)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+}
+
+class MenuItemPickerCell: UITableViewCell {
+    
+    var minusHandler: ((Int) -> ())?
+    var plusHandler: ((Int) -> ())?
+    
+    var container: UIStackView = {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        return $0
+    }(UIStackView())
+    
+    var titleLabel: UILabel = {
+        $0.numberOfLines = 0
+        return $0
+    }(UILabel())
+    
+    lazy var minusButton: UIButton = {
+        $0.setImage(UIImage(systemName: "minus.square"), for: .normal)
+        $0.snp.makeConstraints({ $0.size.equalTo(CGSize(width: 40, height: 40)) })
+        $0.addTarget(self, action: #selector(minusTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
+    var quantityLabel: UILabel = {
+        $0.textAlignment = .center
+        $0.text = "1"
+        $0.snp.makeConstraints({ $0.width.equalTo(30) })
+        return $0
+    }(UILabel())
+    
+    lazy var plusButton: UIButton = {
+        $0.setImage(UIImage(systemName: "plus.square"), for: .normal)
+        $0.snp.makeConstraints({ $0.size.equalTo(CGSize(width: 40, height: 40)) })
+        $0.addTarget(self, action: #selector(plusTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
+    var quantity: Int = 1 {
+        didSet {
+            quantityLabel.text = "\(quantity)"
+        }
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        contentView.addSubview(container)
+        container.snp.makeConstraints({ $0.edges.equalToSuperview().inset(8) })
+        container.addArrangedSubviews([titleLabel, minusButton, quantityLabel, plusButton])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func minusTapped() {
+        quantity = max(1, quantity - 1)
+        minusHandler?(quantity)
+    }
+    
+    @objc func plusTapped() {
+        quantity += 1
+        plusHandler?(quantity)
     }
     
 }

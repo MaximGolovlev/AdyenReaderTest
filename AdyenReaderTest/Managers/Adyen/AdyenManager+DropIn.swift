@@ -15,9 +15,9 @@ import AdyenActions
 extension AdyenManager {
     
     func makeDropinComponent(orderId2: String, target: TransactionProvider,
-                             dropInDelegate: DropInComponentDelegate?,
-                             sessionDelegate: AdyenSessionDelegate,
-                             presentationDelegate: PresentationDelegate) async throws -> (AdyenSession, DropInComponent) {
+                             paymentSheetDelegate: PaymentSheetDelegate?) async throws -> (AdyenSession, DropInComponent) {
+        
+        self.paymentSheetDelegate = paymentSheetDelegate
         
         let sessionData: DropInSessionResponse = try await APIManager.fetchAdyenSession(orderId2: orderId2)
             .makeRequest(logsHandler: { target.handleLogs(message: $0) })
@@ -39,28 +39,11 @@ extension AdyenManager {
                                                        initialSessionData: sessionData.sessionData, // The sessionData from the API response.
                                                        context: adyenContext)
         
-        let session = try await withUnsafeThrowingContinuation { continuation in
-            
-            DispatchQueue.main.async {
-                AdyenSession.initialize(with: configuration, delegate: sessionDelegate, presentationDelegate: presentationDelegate) { result in
-                    switch result {
-                    case let .success(session):
-                        continuation.resume(returning: session)
-                    case let .failure(error):
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-            
-        }
+        let session = try await initializeAdyenSession(configuration: configuration, delegate: self, presentationDelegate: self)
         
         let dropInConfiguration = DropInComponent.Configuration()
-        // Some payment methods have additional required or optional configuration.
-        // For example, an optional configuration to show the cardholder name field for cards.
         dropInConfiguration.card.showsHolderNameField = true
-//        dropInConfiguration.actionComponent.threeDS.delegateAuthentication = ConfigurationConstants.delegatedAuthenticationConfigurations
-//        dropInConfiguration.actionComponent.threeDS.requestorAppURL = URL(string: ConfigurationConstants.returnUrl)
-//        dropInConfiguration.card.billingAddress.mode = .postalCode
+        dropInConfiguration.allowsSkippingPaymentList = true
         
         let dropInComponent = DropInComponent(paymentMethods: session.sessionContext.paymentMethods,
                                               context: adyenContext,
@@ -71,72 +54,74 @@ extension AdyenManager {
         // If you support gift cards, set the session as the partial payment delegate.
         dropInComponent.partialPaymentDelegate = session
         
+        self.adyenSession = session
+        self.dropInComponent = dropInComponent
         
         return (session, dropInComponent)
     }
     
+    private func initializeAdyenSession(configuration: AdyenSession.Configuration, delegate: AdyenSessionDelegate, presentationDelegate: PresentationDelegate) async throws -> AdyenSession {
+        return try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor in
+                AdyenSession.initialize(with: configuration, delegate: delegate, presentationDelegate: presentationDelegate) { result in
+                    switch result {
+                    case let .success(session):
+                        continuation.resume(returning: session)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
-enum ConfigurationConstants {
-    // swiftlint:disable explicit_acl
-    // swiftlint:disable line_length
 
-    /// Please use your own web server between your app and adyen checkout API.
-    static let componentsEnvironment = Adyen.Environment.test
-
-    static let appName = "Adyen Demo"
-
-    static let reference = "Test Order Reference - iOS UIHost"
-
-    static let returnUrl = "ui-host://payments"
+extension AdyenManager: AdyenSessionDelegate {
     
-    static let shopperReference = "iOS Checkout Shopper"
-
-    static let shopperEmail = "checkoutShopperiOS@example.org"
-    
-    static let additionalData = ["allow3DS2": true, "executeThreeD": true]
-
-    static var apiContext: APIContext {
-        if let apiContext = try? APIContext(environment: componentsEnvironment, clientKey: clientKey) {
-            return apiContext
+    func didComplete(with resultCode: SessionPaymentResultCode, component: Adyen.Component, session: AdyenSession) {
+        
+        switch resultCode {
+        case .authorised, .pending, .received:
+            dropInComponent?.viewController.dismiss(animated: true) {
+                self.paymentSheetDelegate?.paymentSheetSucceed()
+            }
+        case .refused:
+            dropInComponent?.stopLoading()
+            self.paymentSheetDelegate?.paymentSheetFailed(error: AdyenManagerErrors.refused)
+        case .cancelled:
+            dropInComponent?.viewController.dismiss(animated: true) {
+                self.paymentSheetDelegate?.paymentSheetClosed()
+            }
+        case .error:
+            break
+        case .presentToShopper:
+            break
         }
-        // swiftlint:disable:next force_try
-        return try! APIContext(environment: componentsEnvironment, clientKey: "local_DUMMYKEYFORTESTING")
     }
-
-    static let clientKey = "{YOUR_CLIENT_KEY}"
-
-    static let demoServerAPIKey = "{YOUR_DEMO_SERVER_API_KEY}"
-
-    static let applePayMerchantIdentifier = "{YOUR_APPLE_PAY_MERCHANT_IDENTIFIER}"
-
-    static let merchantAccount = "{YOUR_MERCHANT_ACCOUNT}"
     
-    static let appleTeamIdentifier = "{YOUR_APPLE_DEVELOPMENT_TEAM_ID}"
+    func didFail(with error: Error, from component: Adyen.Component, session: AdyenSession) {
 
-    static let lineItems = [["description": "Socks",
-                             "quantity": "2",
-                             "amountIncludingTax": "300",
-                             "amountExcludingTax": "248",
-                             "taxAmount": "52",
-                             "id": "Item #2"]]
-    static var delegatedAuthenticationConfigurations: ThreeDS2Component.Configuration.DelegatedAuthentication {
-        .init(localizedRegistrationReason: "Authenticate your card!",
-              localizedAuthenticationReason: "Register this device!",
-              appleTeamIdentifier: appleTeamIdentifier)
-        
+        if let error = error as? Adyen.ComponentError {
+            switch error {
+            case .cancelled:
+                dropInComponent?.viewController.dismiss(animated: true) {
+                    self.paymentSheetDelegate?.paymentSheetClosed()
+                }
+            case .paymentMethodNotSupported:
+                paymentSheetDelegate?.paymentSheetFailed(error: error)
+            }
+        } else {
+            paymentSheetDelegate?.paymentSheetFailed(error: error)
+        }
     }
+    
+}
 
-    static var shippingMethods: [PKShippingMethod] = {
-        var shippingByCar = PKShippingMethod(label: "By car", amount: NSDecimalNumber(5.0))
-        shippingByCar.identifier = "car"
-        shippingByCar.detail = "Tomorrow"
-
-        var shippingByPlane = PKShippingMethod(label: "By Plane", amount: NSDecimalNumber(50.0))
-        shippingByPlane.identifier = "plane"
-        shippingByPlane.detail = "Today"
-        
-        return [shippingByCar, shippingByPlane]
-    }()
+extension AdyenManager: PresentationDelegate {
+    func present(component: Adyen.PresentableComponent) {
+        print("present")
+    }
 
 }

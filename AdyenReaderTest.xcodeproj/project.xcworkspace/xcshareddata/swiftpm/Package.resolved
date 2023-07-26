@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "adyen-pos-mobile-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Adyen/adyen-pos-mobile-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a1fce9c39e5d55adf70a95170f217abaf20a942b"
+      }
+    },
+    {
       "identity" : "adyen-terminal-api-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Adyen/adyen-terminal-api-ios",
@@ -43,15 +52,6 @@
       "state" : {
         "revision" : "aee9b422f02d3ff75533a3338db45f2f9b9010b0",
         "version" : "2.1.0"
-      }
-    },
-    {
-      "identity" : "adyenpos_1.0.4",
-      "kind" : "localSourceControl",
-      "location" : "/Users/maxim/Documents/AdyenReaderTest/AdyenPOS_1.0.4",
-      "state" : {
-        "branch" : "main",
-        "revision" : "1c0d17450dc2ea28de6b9d3f20dab4e7518db253"
       }
     },
     {

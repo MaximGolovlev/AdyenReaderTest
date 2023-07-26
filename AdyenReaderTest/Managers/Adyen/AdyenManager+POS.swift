@@ -10,13 +10,13 @@ import AdyenPOS
 
 extension AdyenManager {
     
-    func performTransaction(orderUUID: String, target: UIViewController, postTips: Bool = false) async throws -> Transaction.Response {
+    func performTransaction(orderUUID: String, target: UIViewController, postTips: Bool = false) async throws -> Payment.Response {
         let paymentInterface = try await paymentService.getPaymentInterface(with: .cardReader)
         let presentationMode: TransactionPresentationMode = .presentingViewController(target)
         
         let manager = APIManager.payAdyenOrderLocal(orderUUID: orderUUID, POIID: poid, postTips: postTips)
         let paymentRequestData = try await manager.getData(logsHandler: logsHandler)
-        let transaction = try Transaction.Request(data: paymentRequestData)
+        let transaction = try Payment.Request(data: paymentRequestData)
         
         return await paymentService.performTransaction(with: transaction, paymentInterface: paymentInterface, presentationMode: presentationMode)
     }

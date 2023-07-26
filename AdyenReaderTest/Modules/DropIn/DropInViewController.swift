@@ -55,9 +55,6 @@ class DropInViewController: UIViewController, TransactionProvider {
         return $0
     }(UIButton(type: .system))
     
-    private var dropInComponent: DropInComponent?
-    private var adyenSession: AdyenSession?
-    
     init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -102,9 +99,8 @@ class DropInViewController: UIViewController, TransactionProvider {
     @objc func showDropInTapped() {
         Task {
             do {
-                let (adyenSession, dropInComponent) = try await adyenManager.makeDropinComponent(orderId2: orderID2, target: self, dropInDelegate: self, sessionDelegate: self, presentationDelegate: self)
-                self.dropInComponent = dropInComponent
-                self.adyenSession = adyenSession
+                let (_, dropInComponent) = try await adyenManager.makeDropinComponent(orderId2: orderID2, target: self, paymentSheetDelegate: self)
+
                 self.present(dropInComponent.viewController, animated: true)
                 
             } catch {
@@ -115,68 +111,17 @@ class DropInViewController: UIViewController, TransactionProvider {
 
 }
 
-extension DropInViewController: DropInComponentDelegate {
+extension DropInViewController: PaymentSheetDelegate {
     
-    func didSubmit(_ data: Adyen.PaymentComponentData, from component: Adyen.PaymentComponent, in dropInComponent: Adyen.AnyDropInComponent) {
+    func paymentSheetSucceed() {
+        showAlert(message: "Success")
+    }
+    
+    func paymentSheetFailed(error: Error) {
+        showAlert(message: error.localizedDescription)
+    }
+    
+    func paymentSheetClosed() {
         
     }
-
-    func didProvide(_ data: Adyen.ActionComponentData, from component: Adyen.ActionComponent, in dropInComponent: Adyen.AnyDropInComponent) {
-        
-    }
-    
-    func didComplete(from component: Adyen.ActionComponent, in dropInComponent: Adyen.AnyDropInComponent) {
-        
-    }
-    
-    func didFail(with error: Error, from component: Adyen.PaymentComponent, in dropInComponent: Adyen.AnyDropInComponent) {
-        
-    }
-    
-    func didFail(with error: Error, from component: Adyen.ActionComponent, in dropInComponent: Adyen.AnyDropInComponent) {
-        
-    }
-    
-    func didFail(with error: Error, from dropInComponent: Adyen.AnyDropInComponent) {
-        
-    }
-    
-    func didCancel(component: PaymentComponent, from dropInComponent: AnyDropInComponent) {
-        dropInComponent.viewController.dismiss(animated: true)
-    }
-    
-}
-
-
-extension DropInViewController: AdyenSessionDelegate {
-    
-    func didComplete(with resultCode: SessionPaymentResultCode, component: Adyen.Component, session: AdyenSession) {
-        
-    }
-    
-    func didFail(with error: Error, from component: Adyen.Component, session: AdyenSession) {
-        
-    }
-    
-//    func handlerForPayments(in component: PaymentComponent, session: AdyenSession) -> AdyenSessionPaymentsHandler? {
-//        return self
-//    }
-//
-    
-}
-
-extension DropInViewController: AdyenSessionPaymentsHandler {
-    
-    func didSubmit(_ paymentComponentData: Adyen.PaymentComponentData, from component: Adyen.Component, dropInComponent: Adyen.AnyDropInComponent?, session: AdyenSession) {
-        
-        
-    }
-}
-
-
-extension DropInViewController: PresentationDelegate {
-    func present(component: Adyen.PresentableComponent) {
-        print("present")
-    }
-
 }

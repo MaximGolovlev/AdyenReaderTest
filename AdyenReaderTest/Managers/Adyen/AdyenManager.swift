@@ -5,8 +5,24 @@
 //  Created by Maxim on 09.03.2023.
 //
 
+import AdyenSession
+import AdyenDropIn
 import AdyenPOS
 import UIKit
+
+enum AdyenManagerErrors: Error, LocalizedError {
+    case refused
+    
+    var errorDescription: String? {
+        switch self {
+        case .refused:
+            return NSLocalizedString(
+                "The payment was refused.",
+                comment: ""
+            )
+        }
+    }
+}
 
 protocol AdyenManagerDeviceDelegate: AnyObject {
     func onDeviceDiscovered(device: AdyenDevice)
@@ -14,6 +30,12 @@ protocol AdyenManagerDeviceDelegate: AnyObject {
     func onDeviceConnected(device: AdyenConnectedDevice)
     func onDeviceConnectionFail(with error: Error)
     func onDeviceDisconnected()
+}
+
+protocol PaymentSheetDelegate: AnyObject {
+    func paymentSheetSucceed()
+    func paymentSheetFailed(error: Error)
+    func paymentSheetClosed()
 }
 
 class AdyenManager {
@@ -30,9 +52,14 @@ class AdyenManager {
     
     weak var deviceDelegate: AdyenManagerDeviceDelegate?
     
+    weak var paymentSheetDelegate: PaymentSheetDelegate?
+    
     private var sessionResponse: POSSessionsResponse?
     
     var connectedDevice: AdyenConnectedDevice?
+    
+    var dropInComponent: DropInComponent?
+    var adyenSession: AdyenSession?
     
     private init() {
         paymentService = PaymentService(delegate: self)
